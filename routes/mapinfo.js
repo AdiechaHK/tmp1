@@ -47,13 +47,14 @@ var n = month[d.getMonth()];
 }
 
 
-var obj = function(imageId,dt,sd,ed,title,info){
+var obj = function(imageId,dt,sd,ed,title,info,id){
 	this.imageId = imageId;
 	this.date=dt;
 	this.startDate = sd;
 	this.endDate = ed;
 	this.title = title;
 	this.info = info;
+	this.id=id;
 }
 
 router.get('/location/:lat/:lng',function(req,res){
@@ -73,13 +74,13 @@ router.get('/location/:lat/:lng',function(req,res){
 			for(var i=0; i<doc.length;i++)
 				if(doc[i].endDate.getTime() < cDate)
 					for(var j=0; j<doc[i].imagecount;j++)
-						pastrecords.push(new obj(doc[i].imageId+'/'+j,getDate(doc[i].date),getDate(doc[i].startDate),getDate(doc[i].endDate),doc[i].title,doc[i].info));
+						pastrecords.push(new obj(doc[i].imageId+'/'+j,getDate(doc[i].date),getDate(doc[i].startDate),getDate(doc[i].endDate),doc[i].title,doc[i].info,doc[i]._id));
 				else if(doc[i].startDate.getTime() < cDate && doc[i].endDate.getTime() > cDate)
 					for(var j=0; j<doc[i].imagecount;j++)
-						presentrecords.push(new obj(doc[i].imageId+'/'+j,getDate(doc[i].date),getDate(doc[i].startDate),getDate(doc[i].endDate),doc[i].title,doc[i].info));
+						presentrecords.push(new obj(doc[i].imageId+'/'+j,getDate(doc[i].date),getDate(doc[i].startDate),getDate(doc[i].endDate),doc[i].title,doc[i].info,doc[i]._id));
 				else if(doc[i].startDate.getTime() > cDate)
 					for(var j=0; j<doc[i].imagecount;j++)
-						futurerecords.push(new obj(doc[i].imageId+'/'+j,getDate(doc[i].date),getDate(doc[i].startDate),getDate(doc[i].endDate),doc[i].title,doc[i].info));
+						futurerecords.push(new obj(doc[i].imageId+'/'+j,getDate(doc[i].date),getDate(doc[i].startDate),getDate(doc[i].endDate),doc[i].title,doc[i].info,doc[i]._id));
 
 					record.push(pastrecords);
 					record.push(presentrecords);
