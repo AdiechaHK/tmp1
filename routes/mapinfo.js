@@ -60,7 +60,7 @@ var obj = function(imageId,dt,sd,ed,title,info,id){
 router.get('/location/:lat/:lng',function(req,res){
 	// console.log(req.params.lat+" , "+req.params.lng);
 	var cDate = new Date().getTime();
-	console.log('Current Date: '+cDate)
+	//console.log('Current Date: '+cDate)
 	var pastrecords=[],
 		presentrecords=[],
 		futurerecords=[],
@@ -69,7 +69,7 @@ router.get('/location/:lat/:lng',function(req,res){
 		if(err)
 			console.log(err);
 		else {
-			console.log('Start Date: '+getDate(doc[0].startDate.getTime()));
+			//console.log('Start Date: '+getDate(doc[0].startDate.getTime()));
 
 			for(var i=0; i<doc.length;i++)
 				if(doc[i].endDate.getTime() < cDate)

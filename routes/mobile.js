@@ -1,12 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var multer = require('multer');
-//var videoData = require(__dirname+'\\model\\videoModel')
 var uploadVideo = require(__dirname+'\\model\\uploadModel');
 var mapinfo = require(__dirname+'\\model\\mapinfo');
 var fs = require('fs');
 var gridfs = require('./model/gridfs');
-// var done=false;
 var actFName = '';
 var uploadFile = multer({ dest: 'uploads/' });
 
@@ -20,12 +18,8 @@ router.use(multer({dest: './public/data/uploads',
 	onFileUploadComplete: function (file) {
      fName = file;
 	  console.log(file.fieldname + ' uploaded to  ' + file.path)
-    // console.log("File name: "+fName);
-    // if(actFName=='')
 
       actFName = file.path
-    // else if(fs.existsSync(actFName))
-      // fs.unlinkSync(actFName);
 		console.log(actFName);
 	  done=true;
 	},
@@ -33,6 +27,80 @@ router.use(multer({dest: './public/data/uploads',
 		console.log('Error during upload: '+error);
 	}
 }));
+
+router.post('/edit',function(req,res){
+
+	console.log(req.body);
+	console.log("files: "+JSON.stringify(req.files));
+	var imageurl= ''
+	if(req.files.efile!==undefined) {
+		var upload;
+		upload = new uploadVideo();
+		upload._id = mongoose.Types.ObjectId(req.body._id);
+		type = req.files.efile.mimetype
+       	upload.docName = req.files.efile.name
+	    opts = {
+	    	content_type: type
+	        };
+		console.log(" path: "+req.files.efile.path)
+	    console.log(" Name: "+req.files.efile.name)
+	    upload.addFile(req.files.efile.path, req.files.efile.name, opts, function (err, result) {
+	    	if(err) {
+	        		console.log('API Trackdocs Error: '+err )
+	        	}
+	        	else
+	        	{
+	        		upload.save();	
+	        		fs.unlinkSync(req.files.efile.path);
+	        		filecount=1;
+	        		imageurl = upload._id;
+	        		mapinfo.findOne({_id:req.body.eid}).exec(function(err,doc){
+	        			console.log('imageId: '+doc.imageId)
+	        			uploadVideo.findOne({_id:doc.imageId}).remove({},true).exec(function(err,doc){
+							if(err)
+								console.log(err);
+						});
+	        				mapinfo.update({_id:req.body.eid},{$set:{
+							latitude:req.body.elatitude,
+							longitude:req.body.elongitude,
+							title:req.body.etitle,
+							info:req.body.einfo,
+							date:req.body.estartDate,
+							imageId:imageurl,
+							imagecount:1,
+							startDate:req.body.estartDate,
+							}}).exec(function(err,doc){
+							// res.send('testing');
+							res.redirect("http://localhost:3000/mapinfo/map");
+							});
+						});
+	        		
+	        	}
+	        })
+	} else {
+
+		mapinfo.findOne({_id:req.body.eid}).exec(function(err,doc){
+		if(err)
+			console.log('No Record found: '+err)
+		else {
+				if(imageurl=='')
+					imageurl = req.body.imageId;
+				mapinfo.update({_id:req.body.eid},{$set:{
+				latitude:req.body.elatitude,
+				longitude:req.body.elongitude,
+				title:req.body.etitle,
+				info:req.body.einfo,
+				date:req.body.estartDate,
+				startDate:req.body.estartDate,
+				}}).exec(function(err,doc){
+					// res.send('testing');
+				res.redirect("http://localhost:3000/mapinfo/map");
+			});
+		}
+		})
+	}
+	
+});
 
 router.get('/', function(req, res) {
   res.render('mobile', { title: 'Mobile upload', jsfile: 'mobile',recordIds:''});
@@ -99,24 +167,135 @@ router.get('/image/:id',function(req,res){
 	});
 });
 router.get('/image',function(req,res){
-	// var gridfs = 
-	//uploadData.find({_id:req.params.id}).exec(function(err,result){
+
 	uploadVideo.find({},{_id:1}).exec(function(err,result){
 		if(err)
 			console.log('Unable to find record: '+err);
-
-		// console.log(result);
 
 		res.render('mobile', { title: 'Mobile upload', jsfile: 'mobile', recordIds:result});
 	});
 });
 
-router.post('/files', function(req,res){
-	console.log('received for files');
+router.post('/angularAdd',function(req,res){
+	if(done==true) {
+     var upload, opts,fpath,type,filecount;
+       upload = new uploadVideo();
+       upload._id = mongoose.Types.ObjectId(req.body._id);
+       if(undefined==req.files.file.length) {
+       		type = req.files.file.mimetype
+       		upload.docName = req.files.file.name
+	        opts = {
+	            content_type: type
+	        };
 
+	        upload.addFile(req.files.file.path, req.files.file.name, opts, function (err, result) {
+	        	if(err) {
+	        		console.log('API Trackdocs Error: '+err )
+	        	}
+	        	else
+	        	{
+	        		upload.save();	
+	        		fs.unlinkSync(req.files.file.path);
+	        		res.send(upload._id);
+	        	}
+	        })
+	    }
+	}
+});
+
+router.post('/addFile',function(req,res){
+	if(done==true) {
+     var upload, opts,fpath,type,filecount;
+       upload = new uploadVideo();
+       upload._id = mongoose.Types.ObjectId(req.body._id);
+       if(undefined==req.files.file.length) {
+       		type = req.files.file.mimetype
+       		upload.docName = req.files.file.name
+	        opts = {
+	            content_type: type
+	        };
+	        console.log(" path: "+req.files.file.path)
+	        console.log(" Name: "+req.files.file.name)
+	        upload.addFile(req.files.file.path, req.files.file.name, opts, function (err, result) {
+	        	if(err) {
+	        		console.log('API Trackdocs Error: '+err )
+	        	}
+	        	else
+	        	{
+	        		upload.save();	
+	        		fs.unlinkSync(req.files.file.path);
+	        		filecount=1;
+	        		var imageurl = upload._id;
+		        	var mapdata = new mapinfo({
+						latitude:req.body.latitude,
+						longitude:req.body.longitude,
+						title:req.body.title,
+						info:req.body.info,
+						date:req.body.startDate,
+						imageId:imageurl,
+						imagecount:filecount,
+						startDate:req.body.startDate,
+						endDate:req.body.endDate
+					});
+					mapdata.save(function(err,query){
+						if(err)
+							console.log('Unable to insert new values into database @ mapinfo/')
+						else
+								res.redirect('http://localhost:3000/mapinfo/map');					    
+						});
+	        	}
+	        });
+       }
+       	else {
+
+       		filecount= req.files.file.length
+
+       		for(var i=0; i< filecount; i++) {
+       			type = req.files.file[i].type
+	       		upload.docName = req.files.file[i].path
+		        opts = {
+		            content_type: type
+		        };
+		        upload.addFile(req.files.file[i].path, req.files.file[i].name, opts, function (err, result) {
+		        	if(err) {
+		        		console.log('API Trackdocs Error: '+err )
+		        	}
+		        	else
+		        	{
+		        		upload.save();	
+		        		var imageurl = ''+upload._id;
+			        	var mapdata = new mapinfo({
+							latitude:req.body.latitude,
+							longitude:req.body.longitude,
+							title:req.body.title,
+							info:req.body.info,
+							date:req.body.startDate,
+							imageId:imageurl,
+							imagecount:1,
+							startDate:req.body.startDate,
+							endDate:req.body.endDate
+						});
+						mapdata.save(function(err,query){
+							if(err)
+								console.log('Unable to insert new values into database @ mapinfo/')
+							
+						});
+						for(var i=0; i<req.files.file.length; i++)
+	            			if(fs.existsSync(req.files.file[i].path))
+	            				fs.unlinkSync(req.files.file[i].path);
+					}
+				});
+       		}
+       	
+        	res.redirect('http://localhost:3000/mapinfo/map');
+	    
+		}
+	}
+});
+
+router.post('/files', function(req,res){
   if(done==true){
-  	console.log('Started upload to DB')
-          var upload, opts,fpath,type,filecount;
+     var upload, opts,fpath,type,filecount;
        upload = new uploadVideo();
        console.log(req.files.file);
        if(undefined==req.files.file.length) {
@@ -135,22 +314,19 @@ router.post('/files', function(req,res){
             content_type: type
         };
         console.log('Files:: '+req.files.file.length)
-        // console.log('File1 : '+req.files.file[0].name);
-        //for(var i=0;i<req.files.file.length; i++) {
-        	// fpath = req.files.file[0].path;
+        
         	console.log(req.files)
-	        upload.addFile(req.files, opts, function (err, result) {
+	        upload.addFiles(req.files, opts, function (err, result) {
 	            if (err) console.log("api TrackDocs Error: " + err);
 
-	            // console.log("Result: " + result);
 	            upload.save();
 	            if(req.files.file.length==undefined)
 	            	fs.unlinkSync(req.files.file.path);
-	            // console.log('Deleting file from drive: '+req.files.file.path);
+	    
 	            for(var i=0; i<req.files.file.length; i++)
 	            	if(fs.existsSync(req.files.file[i].path))
 	            		fs.unlinkSync(req.files.file[i].path);
-	           	var imageurl = 'http://localhost:3000/mobile/image/'+upload._id;
+	           	var imageurl = upload._id;
 	           	console.log(req.body);
 		
 			var mapdata = new mapinfo({
@@ -173,12 +349,8 @@ router.post('/files', function(req,res){
 	    
 			});
 
-		        // console.log("Inserted Doc Id: " + upload._id);
-	            // res.json(upload._id);
-	           // res.end('Uploaded successfully');
-	            // res.send(upload._id);
+		     
 	        });
-	    // }
   }
 });
 

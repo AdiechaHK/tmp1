@@ -1,7 +1,6 @@
 var fs = require('fs');
 var mongoose = require('mongoose');
 var db = mongoose.connection;
-// console.log(db);
 var gridfs = require('./gridfs');
 var Schema = mongoose.Schema;
 
@@ -13,7 +12,17 @@ var uploadSchema = mongoose.Schema(
         }
 );
 
-uploadSchema.methods.addFile = function(files, options, fn) {
+uploadSchema.methods.addFile = function(path,filename,options,fn){
+        upload = this;
+        gridfs.putGridFileByPath(path, filename, options, function(err, result) {
+        if (err) 
+            console.log("UploadModel Upload Error: " + err);
+        upload.files.push(result);
+        return upload.save(fn);
+    });
+}
+
+uploadSchema.methods.addFiles = function(files, options, fn) {
     var upload,count,fpath;
     // var fileArray = [];
     upload = this;
