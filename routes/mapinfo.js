@@ -1,25 +1,66 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
-var mapinfo = require(__dirname+'\\model\\mapinfo');
+var async = require('async');
+var mapinfo = require(__dirname+'/model/mapinfo');
+var meetup = require(__dirname+'/model/meetup');
+var yelp = require(__dirname+'/model/yelp');
 
-/* GET home page. */
 
-router.get('/map', function(req, res) {
-	var mapData ='';
+var mapObj = function(lat,lon,title,info,imgId,startDate,endDate,id) {
+	this.Latitude = lat;
+	this.Longitude=lon;
+	this.Name=title;
+	this.Description=info;
+	this.ImageUrl=imgId;
+	this.StartDate=startDate;
+	this.EndDate = endDate;
+	this.Id = id;
+}
+
+router.get('/', function(req, res) {
+	var mapData =[];
 	mapinfo.find({}).exec(function(err,doc){
 		if(err)
 			console.log(err);
-		else
-			mapData = doc
-			// console.log(mapData);
-		res.render('map', { title:'Map information', jsfile:'mapinfo', mapData:mapData});
+		else {
+			// console.log('data: '+doc[0]);
+			for(var j=0; j < doc.length; j++)
+				mapData.push(new mapObj(doc[j].Latitude,doc[j].Longitude,doc[j].Name,doc[j].Description,doc[j].ImageUrl, doc[j].StartDate,doc[j].EndDate,doc[j]._id));
+			meetup.find().exec(function(err,rec){
+					// meetupData.each(function(err,rec){
+					if(err)
+						console.log(err);
+					else 
+					for(var i=0; i<rec.length; i++) {
+						if(rec !=null) 
+							mapData.push(new mapObj(rec[i].Latitude,rec[i].Longitude,rec[i].Name,rec[i].Description,rec[i].ImageUrl,rec[i].StartDate,rec[i].EndDate,rec[i]._id))
+						}
+					
+					yelp.find().exec(function(err,rec){
+						if(err)
+							console.log('Error at Yelp retrieve: '+err);
+						else {
+							// console.log('First: '+rec[0]);
+							for(var i=0; i<rec.length; i++) {
+								if(rec !=null) 
+									mapData.push(new mapObj(rec[i].Latitude,rec[i].Longitude,rec[i].Name,rec[i].Description,rec[i].ImageUrl,rec[i].StartDate,rec[i].EndDate,rec[i]._id))
+							}
+						}
+						console.log("Total records: "+mapData.length);
+						// console.log('First Record: '+mapData[0].Latitude);
+						res.render('map', { title:'Map information', jsfile:'mapinfo', mapData:mapData});
+				});
+					
+			});
+		}
+			
 	});
 	// console.log(mapData);
   
 });
 
-router.get('/', function(req, res) {
+router.get('/map', function(req, res) {
 	res.render('mapinfo', { title:'Map information', jsfile:'mapinfo'});
 	
 });
@@ -48,63 +89,109 @@ var n = month[d.getMonth()];
 
 
 var obj = function(imageId,dt,sd,ed,title,info,id){
-	this.imageId = imageId;
+	this.ImageUrl = imageId;
 	this.date=dt;
-	this.startDate = sd;
-	this.endDate = ed;
-	this.title = title;
-	this.info = info;
+	this.StartDate = sd;
+	this.EndDate = ed;
+	this.Name = title;
+	this.Description = info;
 	this.id=id;
 }
 
 router.get('/location/:lat/:lng',function(req,res){
-	// console.log(req.params.lat+" , "+req.params.lng);
+	console.log(req.params.lat+" , "+req.params.lng);
 	var cDate = new Date().getTime();
 	//console.log('Current Date: '+cDate)
 	var pastrecords=[],
 		presentrecords=[],
 		futurerecords=[],
+		// actRecords=[],
 		record=[];
-	mapinfo.find({latitude:req.params.lat, longitude:req.params.lng}).sort({startDate:1}).exec(function(err,doc){
-		if(err)
-			console.log(err);
-		else {
-			//console.log('Start Date: '+getDate(doc[0].startDate.getTime()));
-
-			for(var i=0; i<doc.length;i++)
-				if(doc[i].endDate.getTime() < cDate)
-					for(var j=0; j<doc[i].imagecount;j++)
-						pastrecords.push(new obj(doc[i].imageId+'/'+j,getDate(doc[i].date),getDate(doc[i].startDate),getDate(doc[i].endDate),doc[i].title,doc[i].info,doc[i]._id));
-				else if(doc[i].startDate.getTime() < cDate && doc[i].endDate.getTime() > cDate)
-					for(var j=0; j<doc[i].imagecount;j++)
-						presentrecords.push(new obj(doc[i].imageId+'/'+j,getDate(doc[i].date),getDate(doc[i].startDate),getDate(doc[i].endDate),doc[i].title,doc[i].info,doc[i]._id));
-				else if(doc[i].startDate.getTime() > cDate)
-					for(var j=0; j<doc[i].imagecount;j++)
-						futurerecords.push(new obj(doc[i].imageId+'/'+j,getDate(doc[i].date),getDate(doc[i].startDate),getDate(doc[i].endDate),doc[i].title,doc[i].info,doc[i]._id));
+		console.log(req.body);
+		async.waterfall([
+			function(cb){
+				var actRecords=[];
+				meetup.find({'Latitude': req.params.lat, 'Longitude': req.params.lng}).sort({startDate:1}).exec(function(err,doc){
+					if(err)
+						console.log(err);
+					for(var i=0; i<doc.length;i++) {
+						if(doc[i].EndDate==null)
+							doc[i].EndDate = doc[i].StartDate+21600000;
+						if(doc[i].ImageUrl==null)
+							doc[i].ImageUrl = 'http://wishpool.one/imgs/SNAP2.png';
+						if(doc[i].Description==null)
+							doc[i].Description='No Description available';
+							actRecords.push(new obj(doc[i].ImageUrl,getDate(new Date()),getDate(doc[i].StartDate),getDate(doc[i].EndDate),doc[i].Name,doc[i].Description,doc[i]._id))				
+					}
+					cb(null, actRecords)
+				});
+			},
+			function(actRecords, cb) {
+				yelp.find({'Latitude': req.params.lat, 'Longitude': req.params.lng}).sort({startDate:1}).exec(function(err,doc){
+					if(err)
+						console.log(err);
+					else
+						for(var i=0; i<doc.length;i++) {
+							if(doc[i].EndDate==null)
+								doc[i].EndDate = doc[i].StartDate+21600000;
+							if(doc[i].ImageUrl==null)
+								doc[i].ImageUrl = 'http://wishpool.one/imgs/SNAP2.png';
+							if(doc[i].Description==null)
+								doc[i].Description='No Description available';
+								actRecords.push(new obj(doc[i].ImageUrl,getDate(new Date()),getDate(doc[i].StartDate),getDate(doc[i].EndDate),doc[i].Name,doc[i].Description,doc[i]._id))				
+						}
+					cb(null, actRecords)
+				});
+			},
+			function(actRecords,cb){
+				mapinfo.find({'Latitude': req.params.lat, 'Longitude': req.params.lng}).sort({startDate:1}).exec(function(err,doc){
+					if(err)
+						console.log(err);
+					else
+						for(var i=0; i<doc.length;i++) {
+							if(doc[i].EndDate==null)
+								doc[i].EndDate = doc[i].StartDate+21600000;
+							if(doc[i].ImageUrl==null)
+								doc[i].ImageUrl = 'http://wishpool.one/imgs/SNAP2.png';
+							if(doc[i].Description==null)
+								doc[i].Description='No Description available';
+								actRecords.push(new obj(doc[i].ImageUrl,getDate(new Date()),getDate(doc[i].StartDate),getDate(doc[i].EndDate),doc[i].Name,doc[i].Description,doc[i]._id))				
+						}
+					cb(null, actRecords)
+				});	
+			},
+			function(actRecords,cb){
+				console.log('Records:: '+actRecords.length)
+				for(var i=0; i<actRecords.length; i++) {
+					if(new Date(actRecords[i].EndDate).getTime() < cDate)
+						pastrecords.push(actRecords[i]);
+					else if(new Date(actRecords[i].StartDate).getTime() < cDate && new Date(actRecords[i].EndDate).getTime() > cDate)
+						presentrecords.push(actRecords[i]);
+					else if(new Date(actRecords[i].StartDate).getTime() > cDate)
+						futurerecords.push(actRecords[i]);
+				}	
 
 					record.push(pastrecords);
 					record.push(presentrecords);
-					record.push(futurerecords);
-			
-			console.log(pastrecords.length)
-			res.send(record);
-		}
-	});
+					record.push(futurerecords);				
+					console.log("sendingRecord: "+record.length);
+					res.send(record);
+			}
+		]);
 });
 
 router.post('/',function(req,res){	
 		console.log('Start Date:'+req.body.startDate)
 		console.log('Start Date:'+req.body.endDate)
 		var mapdata = new mapinfo({
-			latitude:req.body.latitude,
-			longitude:req.body.longitude,
-			title:req.body.title,
-			info:req.body.info,
+			Latitude:req.body.latitude,
+			Longitude:req.body.longitude,
+			Name:req.body.title,
+			Description:req.body.info,
 			date:new Date(),
-			imageId:req.body.imageId,
-			imagecount:req.body.imagecount,
-			startDate:req.body.startDate,
-			endDate:req.body.endDate
+			ImageUrl:req.body.imageId,
+			StartDate:req.body.startDate,
+			EndDate:req.body.endDate
 		});
 	mapdata.save(function(err,query){
 		if(err)

@@ -1,15 +1,14 @@
 var mongoose = require('mongoose');
 
 var mapinfoSchema = mongoose.Schema({
-	latitude:Number,
-	longitude:Number,
-	title:String,
-	info:String,
-	imageId:String,
-	imagecount:Number,
+	Latitude:Number,
+	Longitude:Number,
+	Name:String,
+	Description:String,
+	ImageUrl:String,
 	date:Date,
-	startDate:Date,
-	endDate:Date
+	StartDate:Date,
+	EndDate:Date
 });
 
 var mapinfo = mongoose.model('mapinfo',mapinfoSchema);

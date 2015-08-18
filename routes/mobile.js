@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var multer = require('multer');
-var uploadVideo = require(__dirname+'\\model\\uploadModel');
-var mapinfo = require(__dirname+'\\model\\mapinfo');
+var uploadVideo = require(__dirname+'/model/uploadModel');
+var mapinfo = require(__dirname+'/model/mapinfo');
+var comments = require(__dirname+'/model/comments');
 var fs = require('fs');
 var gridfs = require('./model/gridfs');
 var actFName = '';
@@ -53,7 +54,7 @@ router.post('/edit',function(req,res){
 	        		upload.save();	
 	        		fs.unlinkSync(req.files.efile.path);
 	        		filecount=1;
-	        		imageurl = upload._id;
+	        		imageurl = 'http://localhost:3000/image/'+upload._id;
 	        		mapinfo.findOne({_id:req.body.eid}).exec(function(err,doc){
 	        			console.log('imageId: '+doc.imageId)
 	        			uploadVideo.findOne({_id:doc.imageId}).remove({},true).exec(function(err,doc){
@@ -61,14 +62,14 @@ router.post('/edit',function(req,res){
 								console.log(err);
 						});
 	        				mapinfo.update({_id:req.body.eid},{$set:{
-							latitude:req.body.elatitude,
-							longitude:req.body.elongitude,
-							title:req.body.etitle,
-							info:req.body.einfo,
+							Latitude:req.body.elatitude,
+							Longitude:req.body.elongitude,
+							Name:req.body.etitle,
+							Description:req.body.einfo,
 							date:req.body.estartDate,
-							imageId:imageurl,
-							imagecount:1,
-							startDate:req.body.estartDate,
+							ImageUrl:imageurl,
+							StartDate:req.body.estartDate,
+							EndDate:req.body.eendDate
 							}}).exec(function(err,doc){
 							// res.send('testing');
 							res.redirect("http://localhost:3000/mapinfo/map");
@@ -86,12 +87,13 @@ router.post('/edit',function(req,res){
 				if(imageurl=='')
 					imageurl = req.body.imageId;
 				mapinfo.update({_id:req.body.eid},{$set:{
-				latitude:req.body.elatitude,
-				longitude:req.body.elongitude,
-				title:req.body.etitle,
-				info:req.body.einfo,
+				Latitude:req.body.elatitude,
+				Longitude:req.body.elongitude,
+				Name:req.body.etitle,
+				Description:req.body.einfo,
 				date:req.body.estartDate,
-				startDate:req.body.estartDate,
+				StartDate:req.body.estartDate,
+				EndDate:req.body.eendDate
 				}}).exec(function(err,doc){
 					// res.send('testing');
 				res.redirect("http://localhost:3000/mapinfo/map");
@@ -138,6 +140,20 @@ router.get('/image/:id/:pos', function(req,res){
 		else
 			res.end(); 
 	})
+})
+
+router.post('/addComment',function(req,res){
+	// console.log(req.body)
+	var comment = new comments();
+	comment.imageId=req.body.imageId;
+	comment.username=req.body.username;
+	comment.date=req.body.date;
+	comment.comment=req.body.comment;
+	comment.save(function(err,data){
+		console.log(data);
+		res.send('Succeeded');
+	});
+	
 })
 
 router.get('/image/:id',function(req,res){
@@ -225,17 +241,16 @@ router.post('/addFile',function(req,res){
 	        		upload.save();	
 	        		fs.unlinkSync(req.files.file.path);
 	        		filecount=1;
-	        		var imageurl = upload._id;
+	        		var imageurl = 'http://localhost:3000/image/'+upload._id;
 		        	var mapdata = new mapinfo({
-						latitude:req.body.latitude,
-						longitude:req.body.longitude,
-						title:req.body.title,
-						info:req.body.info,
+						Latitude:req.body.latitude,
+						Longitude:req.body.longitude,
+						Name:req.body.title,
+						Description:req.body.info,
 						date:req.body.startDate,
-						imageId:imageurl,
-						imagecount:filecount,
-						startDate:req.body.startDate,
-						endDate:req.body.endDate
+						ImageUrl:imageurl,
+						StartDate:req.body.startDate,
+						EndDate:req.body.endDate
 					});
 					mapdata.save(function(err,query){
 						if(err)
@@ -265,15 +280,14 @@ router.post('/addFile',function(req,res){
 		        		upload.save();	
 		        		var imageurl = ''+upload._id;
 			        	var mapdata = new mapinfo({
-							latitude:req.body.latitude,
-							longitude:req.body.longitude,
-							title:req.body.title,
-							info:req.body.info,
+							Latitude:req.body.latitude,
+							Longitude:req.body.longitude,
+							Name:req.body.title,
+							Description:req.body.info,
 							date:req.body.startDate,
-							imageId:imageurl,
-							imagecount:1,
-							startDate:req.body.startDate,
-							endDate:req.body.endDate
+							imageUrl:imageurl,
+							StartDate:req.body.startDate,
+							EndDate:req.body.endDate
 						});
 						mapdata.save(function(err,query){
 							if(err)
@@ -326,19 +340,18 @@ router.post('/files', function(req,res){
 	            for(var i=0; i<req.files.file.length; i++)
 	            	if(fs.existsSync(req.files.file[i].path))
 	            		fs.unlinkSync(req.files.file[i].path);
-	           	var imageurl = upload._id;
+	           	var imageurl = 'http://localhost:3000/image/'+upload._id;
 	           	console.log(req.body);
 		
 			var mapdata = new mapinfo({
-				latitude:req.body.latitude,
-				longitude:req.body.longitude,
-				title:req.body.title,
-				info:req.body.info,
+				Latitude:req.body.latitude,
+				Longitude:req.body.longitude,
+				Name:req.body.title,
+				Description:req.body.info,
 				date:req.body.startDate,
-				imageId:imageurl,
-				imagecount:filecount,
-				startDate:req.body.startDate,
-				endDate:req.body.endDate
+				ImageUrl:imageurl,
+				StartDate:req.body.startDate,
+				EndDate:req.body.endDate
 			});
 		mapdata.save(function(err,query){
 		if(err)
