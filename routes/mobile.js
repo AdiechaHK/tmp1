@@ -56,11 +56,13 @@ router.post('/edit',function(req,res){
 	        		filecount=1;
 	        		imageurl = 'http://localhost:3000/image/'+upload._id;
 	        		mapinfo.findOne({_id:req.body.eid}).exec(function(err,doc){
-	        			console.log('imageId: '+doc.imageId)
-	        			uploadVideo.findOne({_id:doc.imageId}).remove({},true).exec(function(err,doc){
-							if(err)
-								console.log(err);
-						});
+	        			if(doc!=null) {
+
+	        			// console.log('imageId: '+doc.ImageUrl)
+	        				uploadVideo.findOne({_id:doc.ImageUrl}).remove({},true).exec(function(err,doc){
+								if(err)
+									console.log(err);
+							});
 	        				mapinfo.update({_id:req.body.eid},{$set:{
 							Latitude:req.body.elatitude,
 							Longitude:req.body.elongitude,
@@ -72,10 +74,29 @@ router.post('/edit',function(req,res){
 							EndDate:req.body.eendDate
 							}}).exec(function(err,doc){
 							// res.send('testing');
-							res.redirect("http://localhost:3000/mapinfo/map");
+							res.redirect("http://localhost:3000/mapinfo");
 							});
-						});
-	        		
+						}
+						else {
+								var mapdata = new mapinfo({
+									Latitude:req.body.elatitude,
+									Longitude:req.body.elongitude,
+									Name:req.body.etitle,
+									Description:req.body.einfo,
+									date:req.body.estartDate,
+									ImageUrl:imageurl,
+									StartDate:req.body.estartDate,
+									EndDate:req.body.eendDate
+								});
+							mapdata.save(function(err,query){
+							if(err)
+								console.log('Unable to insert new values into database @ mapinfo/')
+							else
+							// res.send(query)
+								res.redirect('http://localhost:3000/mapinfo');
+							});					
+						}
+					});
 	        	}
 	        })
 	} else {
@@ -256,7 +277,7 @@ router.post('/addFile',function(req,res){
 						if(err)
 							console.log('Unable to insert new values into database @ mapinfo/')
 						else
-								res.redirect('http://localhost:3000/mapinfo/map');					    
+								res.redirect('http://localhost:3000/mapinfo');					    
 						});
 	        	}
 	        });
@@ -301,7 +322,7 @@ router.post('/addFile',function(req,res){
 				});
        		}
        	
-        	res.redirect('http://localhost:3000/mapinfo/map');
+        	res.redirect('http://localhost:3000/mapinfo');
 	    
 		}
 	}
@@ -358,7 +379,7 @@ router.post('/files', function(req,res){
 			console.log('Unable to insert new values into database @ mapinfo/')
 		else
 			// res.send(query)
-				res.redirect('http://localhost:3000/mapinfo/map');
+				res.redirect('http://localhost:3000/mapinfo');
 	    
 			});
 

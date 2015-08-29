@@ -118,9 +118,13 @@ router.get('/location/:lat/:lng',function(req,res){
 						if(doc[i].EndDate==null)
 							doc[i].EndDate = doc[i].StartDate+21600000;
 						if(doc[i].ImageUrl==null)
-							doc[i].ImageUrl = 'http://wishpool.one/imgs/SNAP2.png';
+							doc[i].ImageUrl = 'https://wishpool.one/imgs/SNAP2.png';
+						else if(doc[i].ImageUrl.indexOf("http:")!=-1)
+							doc[i].ImageUrl = doc[i].ImageUrl.replace("http:", "")
 						if(doc[i].Description==null)
 							doc[i].Description='No Description available';
+
+						console.log(doc[i].ImageUrl);
 							actRecords.push(new obj(doc[i].ImageUrl,getDate(new Date()),getDate(doc[i].StartDate),getDate(doc[i].EndDate),doc[i].Name,doc[i].Description,doc[i]._id))				
 					}
 					cb(null, actRecords)
@@ -135,7 +139,9 @@ router.get('/location/:lat/:lng',function(req,res){
 							if(doc[i].EndDate==null)
 								doc[i].EndDate = doc[i].StartDate+21600000;
 							if(doc[i].ImageUrl==null)
-								doc[i].ImageUrl = 'http://wishpool.one/imgs/SNAP2.png';
+								doc[i].ImageUrl = 'https://wishpool.one/imgs/SNAP2.png';
+							else if(doc[i].ImageUrl.indexOf("http:")!=-1)
+								doc[i].ImageUrl = doc[i].ImageUrl.replace("http:", "")
 							if(doc[i].Description==null)
 								doc[i].Description='No Description available';
 								actRecords.push(new obj(doc[i].ImageUrl,getDate(new Date()),getDate(doc[i].StartDate),getDate(doc[i].EndDate),doc[i].Name,doc[i].Description,doc[i]._id))				
@@ -152,7 +158,9 @@ router.get('/location/:lat/:lng',function(req,res){
 							if(doc[i].EndDate==null)
 								doc[i].EndDate = doc[i].StartDate+21600000;
 							if(doc[i].ImageUrl==null)
-								doc[i].ImageUrl = 'http://wishpool.one/imgs/SNAP2.png';
+								doc[i].ImageUrl = 'https://wishpool.one/imgs/SNAP2.png';
+							else if(doc[i].ImageUrl.indexOf("http:")!=-1)
+								doc[i].ImageUrl = doc[i].ImageUrl.replace("http:", "")
 							if(doc[i].Description==null)
 								doc[i].Description='No Description available';
 								actRecords.push(new obj(doc[i].ImageUrl,getDate(new Date()),getDate(doc[i].StartDate),getDate(doc[i].EndDate),doc[i].Name,doc[i].Description,doc[i]._id))				
