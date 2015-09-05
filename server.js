@@ -4,6 +4,8 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
+var mobile = require('./routes/mobile');
+var mapinfo = require('./routes/mapinfo');
 var db = mongoose.connect('mongodb://127.0.0.1:27017/test');
 var app = express();
 
@@ -11,6 +13,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.static(__dirname+'/public'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', routes);
+app.use('/mobile',mobile);
+app.use('/mapinfo',mapinfo);
 
 app.listen(3000);
