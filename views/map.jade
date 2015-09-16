@@ -116,11 +116,27 @@ html
         #pac-input{
             width: 278px;
         }
+        .menu{
+            margin-left: 0px;
+            margin-top: 40px;
+            position: absolute;
+            z-index: 99999;
+        }
         .menu-map{
+
             background-color: white;
             color: black;
-            margin-left: 35px;
-            width: 320px;
+            margin-left: 41px;
+            border: 1px solid #BDBDBD;
+            padding: 7px 7px;
+            -webkit-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+            -moz-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+            box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+        }
+        .sub-menu-map{
+
+            background-color: white;
+            color: black;
             border: 1px solid #BDBDBD;
             padding: 7px 7px;
             -webkit-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
@@ -134,6 +150,16 @@ html
         }
         .menu-cell span{
             font-size: 21px;
+            padding: 5px;
+            color: grey;
+        }
+        .sub-menu-cell span:hover{
+            background-color: gainsboro;;
+            cursor: pointer;
+            color: grey;
+        }
+        .sub-menu-cell span{
+            font-size: 16px;
             padding: 5px;
             color: grey;
         }
@@ -181,71 +207,68 @@ html
           hr(style='margin:0px;')
           input.form-control(id='end-input' type='text' style='margin:0px; border:0px' placeholder='Choose Destination')
           div(id='route-info')
-      .menu-map
-          .row.menu-map-container
-            .col-md-12.menu-cell
-                span.col-md-12
-                    i.fa.fa-cutlery
-                    |  Eat and Drink
-            .col-md-12.menu-cell
-                span.col-md-12
-                    i.fa.fa-shopping-cart
-                    |  Shopping
-            .col-md-12.menu-cell
-                span.col-md-12
-                    i.fa.fa-coffee
-                    |  Going out
-            .col-md-12.menu-cell
-                span.col-md-12
-                    i.fa.fa-bed
-                    |  Accommodation
-            .col-md-12.menu-cell
-                span.col-md-12
-                    i.fa.fa-camera-retro
-                    |  Sights and Museums
-            .col-md-12.menu-cell
-                span.col-md-12
-                    i.fa.fa-taxi
-                    |  Transport
-            .col-md-12.menu-cell
-                span.col-md-12
-                    i.fa.fa-building
-                    |  Business and Services
-            .col-md-12.menu-cell
-                span.col-md-12
-                    i.fa.fa-hospital-o
-                    |  Facilities
-            .col-md-12.menu-cell
-                span.col-md-12
-                    i.fa.fa-umbrella
-                    |  Leisure & Outdoor
-            .col-md-12.menu-cell
-                span.col-md-12
-                    i.fa.fa-leaf
-                    |  Natural or Geographical
+    .row.menu
+        .col-md-3.menu-map
+            .row.menu-map-container
+                .col-md-12.menu-cell(id='menu-cell-1')
+                    span.col-md-12
+                        i.fa.fa-cutlery
+                        |  Eat and Drink
+                .col-md-12.menu-cell(id='menu-cell-2')
+                    span.col-md-12
+                        i.fa.fa-shopping-cart
+                        |  Shopping
+                .col-md-12.menu-cell(id='menu-cell-3')
+                    span.col-md-12
+                        i.fa.fa-coffee
+                        |  Going out
+                .col-md-12.menu-cell(id='menu-cell-4')
+                    span.col-md-12
+                        i.fa.fa-bed
+                        |  Accommodation
+                .col-md-12.menu-cell(id='menu-cell-5')
+                    span.col-md-12
+                        i.fa.fa-camera-retro
+                        |  Sights and Museums
+                .col-md-12.menu-cell(id='menu-cell-6')
+                    span.col-md-12
+                        i.fa.fa-taxi
+                        |  Transport
+                .col-md-12.menu-cell(id='menu-cell-7')
+                    span.col-md-12
+                        i.fa.fa-building
+                        |  Business and Services
+                .col-md-12.menu-cell(id='menu-cell-8')
+                    span.col-md-12
+                        i.fa.fa-hospital-o
+                        |  Facilities
+                .col-md-12.menu-cell(id='menu-cell-9')
+                    span.col-md-12
+                        i.fa.fa-umbrella
+                        |  Leisure & Outdoor
+                .col-md-12.menu-cell(id='menu-cell-10')
+                    span.col-md-12
+                        i.fa.fa-leaf
+                        |  Natural or Geographical
+        .col-md-3.sub-menu-map
+
     #map-canvas
     script.
-      $('#direction-group').hide();
-      $('.menu-map').hide();
-      $('#search-group').hide();
-      $('#startend-group').hide();
-      function directionGroup() {
-        $('#search-group').toggle();
-        $('#direction-group').toggle();
-        $('#startend-group').toggle();
-      }
-      function toggleInput(){
-        $('#search-group').toggle();
-        if(!$('#direction-group').is(':hidden')) {
-          console.log('Not Hidden');
-          directionGroup()
-        }
-      }
-      $('#pac-input').focusin(function(){
-        $('.menu-map').show(400);
-      });
-      $('#pac-input').focusout(function(){
-        $('.menu-map').hide(400);
-      });
+          $('#direction-group').hide();
+          $('#search-group').hide();
+          $('#startend-group').hide();
+          function directionGroup() {
+              $('#search-group').toggle();
+              $('#direction-group').toggle();
+              $('#startend-group').toggle();
+          }
+          function toggleInput(){
+              $('#search-group').toggle();
+              if(!$('#direction-group').is(':hidden')) {
+                  console.log('Not Hidden');
+                  directionGroup()
+              }
+          }
+    script(src='./javascripts/map.js')
 
     
