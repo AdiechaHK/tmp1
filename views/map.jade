@@ -1,0 +1,251 @@
+doctype html
+html
+  head
+    meta(name='viewport', content='initial-scale=1.0, user-scalable=no')
+    |     
+    meta(charset='utf-8')
+    |     
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    title Info windows
+    |     
+    style.
+      html, body, #map-canvas {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      }
+      @media only screen and (min-width : 1200px) {
+        .carousel-dates
+        {
+          top: 75%;
+          position: absolute;
+          right: 15%;
+          bottom: 10%;
+          left: 15%;
+          z-index: 10;
+          padding-top: 20px;
+          padding-bottom: 20px;
+          color: #fff;
+          text-align: center;
+          text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+        }
+        .carousel-info
+        {
+          top: 0%;
+          position: absolute;
+          right: 20%;
+          bottom: 20px;
+          left: 80%;
+          z-index: 10;
+          padding-top: 5px;
+          padding-bottom: 20px;
+          color: #fff;
+          text-align: center;
+          text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+        }
+        .carousel-caption
+        {
+          top: 0%;
+        }
+        .bs-example{
+         margin: 10px;
+        }
+        .comment 
+        {
+          top: 88%;
+          position: absolute;
+          right: 5%;
+          bottom: %;
+          left: 5%;
+          z-index: 10;
+          padding-top: 5px;
+          padding-bottom: 20px;
+          text-align: center;
+        }
+      }
+        .verticalLine {
+          border-left: thick solid #ff0000;
+        }
+        #pac-input {
+          background-color: #fff;
+          font-family: Roboto;
+          font-size: 15px;
+          font-weight: 300;
+          margin-left: 12px;
+          padding: 0 11px 0 13px;
+          text-overflow: ellipsis;
+          width: 300px;
+        }
+
+        #pac-input:focus {
+          border-color: #4d90fe;
+        }
+
+        .pac-container {
+          font-family: Roboto;
+        }
+        .controls {
+          position:relevant;
+          margin-top: 0px;
+          width:370px;
+          z-index:15;
+          padding:6px;
+          max-width:370px;
+          display:block;
+          overflow:hidden;
+        }
+        .verticalLine {
+          border-left: thick solid #ff0000;
+        }
+        #type-selector {
+          color: #fff;
+          background-color: #4d90fe;
+          padding: 5px 11px 0px 11px;
+        }
+
+        #type-selector label {
+          font-family: Roboto;
+          font-size: 13px;
+          font-weight: 300;
+        }
+        #target {
+            width: 345px;
+        }
+        #pac-input{
+            width: 278px;
+        }
+        .menu-map{
+            background-color: white;
+            color: black;
+            margin-left: 35px;
+            width: 320px;
+            border: 1px solid #BDBDBD;
+            padding: 7px 7px;
+            -webkit-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+            -moz-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+            box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+        }
+        .menu-cell span:hover{
+            background-color: orange;
+            cursor: pointer;
+            color: grey;
+        }
+        .menu-cell span{
+            font-size: 21px;
+            padding: 5px;
+            color: grey;
+        }
+    |     
+    script.
+     var mapInfo = !{JSON.stringify(mapData)}
+    
+    script(src='../lib/angular.min.js')
+    script(src='../lib/ui-bootstrap-tpls-0.13.1.min.js')
+    <script src="http://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&sensor=false"></script>
+    | &#x9;
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    script(src='../lib/maps.js')
+    script(src='../lib/markerclusterer.js')
+  body
+    //script(src='../controllers/mapinfo.js')
+    .controls(id='pac-in')
+      div(class='input-group' id='button-search')
+        a.input-group-btn.btn.btn-default(href="#" role="button" style='width:18px; height:20px; margin:0px;padding:0px;' onclick='toggleInput()')
+          img(src='../images/search.jpg' width='32px')
+          //button.btn.btn-default(type='button' style='margin:0px; padding:0px;' onclick='toggleInput()')
+            
+        div(class='input-group' id='search-group')
+          a.input-group-btn.btn.btn-default.go.inline(href="#" style='position:relative; margin:0px' role="button" onclick='directionGroup()')
+            img(src='../images/directions.png' width='18px'  )
+          input.form-control(id='pac-input' type='text' style='margin:0px;' placeholder='Search Box...')
+
+        div(id='direction-group')
+          a.input-group-btn.btn.btn-default(href="#" role="button" )
+            img(src='../images/directions.png' width='18px')
+          a.input-group-btn.btn.btn-default(href="#" role="button"  onclick='directionInfo(\'WALKING\')')
+            img(src='../images/walking.png' width='18px')
+          a.input-group-btn.btn.btn-default(href="#" role="button" onclick='directionInfo(\'BICYCLING\')')
+            img(src='../images/cycling.jpg' width='18px')
+          a.input-group-btn.btn.btn-default(href="#" role="button" onclick='directionInfo(\'TRANSIT\')')
+            img(src='../images/transit.png' width='18px')
+          a.input-group-btn.btn.btn-default(href="#" role="button" onclick='directionInfo(\'DRIVING\')')
+            img(src='../images/driving.jpg' width='18px')
+          a.input-group-btn.btn.btn-default(href="#" role="button" onclick='searchGroup()')
+            img(src='../images/close.png' width='18px')
+
+      div(id='startend-group')
+          input.form-control(id='start-input' type='text' style='margin:0px; border:0px' placeholder='Choose Starting point')
+          hr(style='margin:0px;')
+          input.form-control(id='end-input' type='text' style='margin:0px; border:0px' placeholder='Choose Destination')
+          div(id='route-info')
+      .menu-map
+          .row.menu-map-container
+            .col-md-12.menu-cell
+                span.col-md-12
+                    i.fa.fa-cutlery
+                    |  Eat and Drink
+            .col-md-12.menu-cell
+                span.col-md-12
+                    i.fa.fa-shopping-cart
+                    |  Shopping
+            .col-md-12.menu-cell
+                span.col-md-12
+                    i.fa.fa-coffee
+                    |  Going out
+            .col-md-12.menu-cell
+                span.col-md-12
+                    i.fa.fa-bed
+                    |  Accommodation
+            .col-md-12.menu-cell
+                span.col-md-12
+                    i.fa.fa-camera-retro
+                    |  Sights and Museums
+            .col-md-12.menu-cell
+                span.col-md-12
+                    i.fa.fa-taxi
+                    |  Transport
+            .col-md-12.menu-cell
+                span.col-md-12
+                    i.fa.fa-building
+                    |  Business and Services
+            .col-md-12.menu-cell
+                span.col-md-12
+                    i.fa.fa-hospital-o
+                    |  Facilities
+            .col-md-12.menu-cell
+                span.col-md-12
+                    i.fa.fa-umbrella
+                    |  Leisure & Outdoor
+            .col-md-12.menu-cell
+                span.col-md-12
+                    i.fa.fa-leaf
+                    |  Natural or Geographical
+    #map-canvas
+    script.
+      $('#direction-group').hide();
+      $('.menu-map').hide();
+      $('#search-group').hide();
+      $('#startend-group').hide();
+      function directionGroup() {
+        $('#search-group').toggle();
+        $('#direction-group').toggle();
+        $('#startend-group').toggle();
+      }
+      function toggleInput(){
+        $('#search-group').toggle();
+        if(!$('#direction-group').is(':hidden')) {
+          console.log('Not Hidden');
+          directionGroup()
+        }
+      }
+      $('#pac-input').focusin(function(){
+        $('.menu-map').show(400);
+      });
+      $('#pac-input').focusout(function(){
+        $('.menu-map').hide(400);
+      });
+
+    

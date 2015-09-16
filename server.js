@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var mobile = require('./routes/mobile');
 var mapinfo = require('./routes/mapinfo');
-var db = mongoose.connect('mongodb://127.0.0.1:27017/test');
+var db = mongoose.connect('mongodb://127.0.0.1:27017/pool');
 var app = express();
 
 app.set('views', path.join(__dirname, 'views'));

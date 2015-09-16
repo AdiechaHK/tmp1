@@ -1,0 +1,21 @@
+{
+  "name": "wishpool",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "async": "^1.2.1",
+    "body-parser": "^1.13.1",
+    "express": "^4.13.0",
+    "jade": "^1.11.0",
+    "mongoose": "^4.0.6",
+    "mongodb": "2.0.39",
+    "multer": "^0.1.8",
+    "string": "3.1.1"
+  }
+}
