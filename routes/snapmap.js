@@ -7,6 +7,8 @@ var meetup = require(__dirname+'/model/meetup');
 var yelp = require(__dirname+'/model/yelp');
 
 
+/* GET home page. */
+
 var mapObj = function(lat,lon,title,info,imgId,startDate,endDate,id) {
 	this.Latitude = lat;
 	this.Longitude=lon;
@@ -18,8 +20,9 @@ var mapObj = function(lat,lon,title,info,imgId,startDate,endDate,id) {
 	this.Id = id;
 }
 
-router.get('/map', function(req, res) {
-	var mapData =[];
+
+router.get('/', function(req, res) {
+var mapData =[];
 	mapinfo.find({}).exec(function(err,doc){
 		if(err)
 			console.log(err);
@@ -56,11 +59,10 @@ router.get('/map', function(req, res) {
 		}
 			
 	});
-	// console.log(mapData);
-  
+ 
 });
 
-router.get('/', function(req, res) {
+router.get('/map', function(req, res) {
 	res.render('mapinfo', { title:'Map information', jsfile:'mapinfo'});
 	
 });
@@ -69,18 +71,18 @@ router.get('/', function(req, res) {
 function getDate(dt) {
 	var d = new Date(dt);
 var month = new Array();
-month[0] = "Jan";
-month[1] = "Feb";
-month[2] = "Mar";
-month[3] = "Apr";
+month[0] = "January";
+month[1] = "February";
+month[2] = "March";
+month[3] = "April";
 month[4] = "May";
-month[5] = "Jun";
-month[6] = "Jul";
-month[7] = "Aug";
-month[8] = "Sep";
-month[9] = "Oct";
-month[10] = "Nov";
-month[11] = "Dec";
+month[5] = "June";
+month[6] = "July";
+month[7] = "August";
+month[8] = "September";
+month[9] = "October";
+month[10] = "November";
+month[11] = "December";
 var n = month[d.getMonth()];
 
 	return d.getDate()+'-'+n+'-'+d.getFullYear()+' '+d.getHours()+':'+d.getMinutes()
@@ -88,29 +90,27 @@ var n = month[d.getMonth()];
 }
 
 
-var obj = function(imageId,dt,sd,ed,title,info,id,lat,lon){
-	this.ImageUrl = imageId;
-	this.date=dt;
-	this.StartDate = sd;
-	this.EndDate = ed;
-	this.Name = title;
-	this.Description = info;
-	this.id=id;
+var obj = function(imageId,sd,ed,title,info,id,lat,lon){
+	this.imageId = imageId;
+	this.startDate = sd;
+	this.endDate = ed;
+	this.title = title;
+	this.info = info;
+	this.id = id;
 	this.Latitude=lat;
 	this.Longitude=lon;
-
 }
 
 router.post('/location',function(req,res){
 	var marker = req.body.markObj;
 	console.log('Markers leng: ');
-	console.log(marker.length)
+	console.log(req.body.markObj)
 	var i=0;
 	var maxlen = req.body.markObj.length;
 	var recordArray=[];
-	var actRecords=[];
 
 	async.each(marker,function(pos,cb){
+		var actRecords=[];
 		getYelpData(pos,actRecords,function(err,yelpResult){
 		getMeetupData(pos,yelpResult,function(err,meetupResult){
 			getMapInfoData(pos,meetupResult,function(err,finalResult){
@@ -129,16 +129,19 @@ router.post('/location',function(req,res){
 			futurerecords=[],
 			record=[];
 			var cDate = new Date().getTime();
-		console.log('Records:: '+recordArray.length)
+		console.log('Records:: '+recordArray[0].length)
 		for(var j=0; j<recordArray.length; j++)
 			for(var i=0; i<recordArray[j].length; i++) {
 				if(new Date(recordArray[j][i].EndDate).getTime() < cDate)
 					pastrecords.push(recordArray[j][i]);
 				else if(new Date(recordArray[j][i].StartDate).getTime() < cDate && new Date(recordArray[j][i].EndDate).getTime() > cDate)
 					presentrecords.push(recordArray[j][i]);
-				else if(new Date(recordArray[j][i].StartDate).getTime() > cDate)
+				else 
 					futurerecords.push(recordArray[j][i]);
 			}		
+			console.log('Past record:: '+pastrecords.length);
+			console.log('present record:: '+presentrecords.length);
+			console.log('Future record:: '+futurerecords.length);
 			record.push(pastrecords);
 			record.push(presentrecords);
 			record.push(futurerecords);				
@@ -151,10 +154,10 @@ router.post('/location',function(req,res){
 }) 
 
 var getMeetupData = function(pos,actRecords,cb) {
-	console.log('Actual Records from Meetup: '+actRecords.length)
 	meetup.find({'Latitude': Number(pos.Latitude), 'Longitude': Number(pos.Longitude)}).sort({startDate:1}).exec(function(err,doc){
 					if(err)
 						console.log(err)
+	console.log('Actual Records from Meetup: '+doc.length)
 					cb(null,formatDbData(doc,actRecords))						
 	});
 }
@@ -163,6 +166,7 @@ var getMapInfoData = function(pos,actRecords,cb) {
 	mapinfo.find({'Latitude': Number(pos.Latitude), 'Longitude': Number(pos.Longitude)}).sort({startDate:1}).exec(function(err,doc){
 					if(err)
 						console.log(err)
+		console.log('Actual Records from mapInfo: '+doc.length)
 					cb(null,formatDbData(doc,actRecords))						
 	});
 }
@@ -171,7 +175,8 @@ var getYelpData = function(pos,actRecords,cb) {
 	yelp.find({'Latitude': Number(pos.Latitude), 'Longitude': Number(pos.Longitude)}).sort({startDate:1}).exec(function(err,doc){
 					if(err)
 						console.log(err)
-					cb(null,formatDbData(doc,actRecords))						
+	console.log('Actual Records from yelp: '+doc.length)
+	cb(null,formatDbData(doc,actRecords))						
 	});
 }
 
@@ -214,10 +219,7 @@ router.get('/location/:lat/:lng',function(req,res){
 						if(doc[i].EndDate==null)
 							doc[i].EndDate = doc[i].StartDate+21600000;
 						if(doc[i].ImageUrl==null)
-							doc[i].ImageUrl = 'https://wishpool.one/imgs/SNAP2.png';
-						else if(doc[i].ImageUrl.indexOf("http:")!=-1)
-							doc[i].ImageUrl = doc[i].ImageUrl.replace("http:", "")
-						
+							doc[i].ImageUrl = 'http://wishpool.one/imgs/SNAP2.png';
 						if(doc[i].Description==null)
 							doc[i].Description='No Description available';
 							actRecords.push(new obj(doc[i].ImageUrl,getDate(new Date()),getDate(doc[i].StartDate),getDate(doc[i].EndDate),doc[i].Name,doc[i].Description,doc[i]._id,doc[i].Latitude,doc[i].Longitude))				
@@ -234,12 +236,10 @@ router.get('/location/:lat/:lng',function(req,res){
 							if(doc[i].EndDate==null)
 								doc[i].EndDate = doc[i].StartDate+21600000;
 							if(doc[i].ImageUrl==null)
-								doc[i].ImageUrl = 'https://wishpool.one/imgs/SNAP2.png';
-							else if(doc[i].ImageUrl.indexOf("http:")!=-1)
-								doc[i].ImageUrl = doc[i].ImageUrl.replace("http:", "")
+								doc[i].ImageUrl = 'http://wishpool.one/imgs/SNAP2.png';
 							if(doc[i].Description==null)
 								doc[i].Description='No Description available';
-								actRecords.push(new obj(doc[i].ImageUrl,getDate(new Date()),getDate(doc[i].StartDate),getDate(doc[i].EndDate),doc[i].Name,doc[i].Description,doc[i]._id,doc[i].Latitude,doc[i].Longitude))	
+								actRecords.push(new obj(doc[i].ImageUrl,getDate(new Date()),getDate(doc[i].StartDate),getDate(doc[i].EndDate),doc[i].Name,doc[i].Description,doc[i]._id,doc[i].Latitude,doc[i].Longitude))				
 						}
 					cb(null, actRecords)
 				});
@@ -253,9 +253,7 @@ router.get('/location/:lat/:lng',function(req,res){
 							if(doc[i].EndDate==null)
 								doc[i].EndDate = doc[i].StartDate+21600000;
 							if(doc[i].ImageUrl==null)
-								doc[i].ImageUrl = 'https://wishpool.one/imgs/SNAP2.png';
-							else if(doc[i].ImageUrl.indexOf("http:")!=-1)
-								doc[i].ImageUrl = doc[i].ImageUrl.replace("http:", "")
+								doc[i].ImageUrl = 'http://wishpool.one/imgs/SNAP2.png';
 							if(doc[i].Description==null)
 								doc[i].Description='No Description available';
 								actRecords.push(new obj(doc[i].ImageUrl,getDate(new Date()),getDate(doc[i].StartDate),getDate(doc[i].EndDate),doc[i].Name,doc[i].Description,doc[i]._id,doc[i].Latitude,doc[i].Longitude))				
@@ -283,18 +281,20 @@ router.get('/location/:lat/:lng',function(req,res){
 		]);
 });
 
+
 router.post('/',function(req,res){	
 		console.log('Start Date:'+req.body.startDate)
 		console.log('Start Date:'+req.body.endDate)
 		var mapdata = new mapinfo({
-			Latitude:req.body.latitude,
-			Longitude:req.body.longitude,
-			Name:req.body.title,
-			Description:req.body.info,
+			latitude:req.body.latitude,
+			longitude:req.body.longitude,
+			title:req.body.title,
+			info:req.body.info,
 			date:new Date(),
-			ImageUrl:req.body.imageId,
-			StartDate:req.body.startDate,
-			EndDate:req.body.endDate
+			imageId:req.body.imageId,
+			imagecount:req.body.imagecount,
+			startDate:req.body.startDate,
+			endDate:req.body.endDate
 		});
 	mapdata.save(function(err,query){
 		if(err)
@@ -306,4 +306,3 @@ router.post('/',function(req,res){
 
 
 module.exports = router;
-

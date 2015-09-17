@@ -67,8 +67,7 @@ exports.deleteGridFile = function(id, fn){
         if (err)
             return fn(err);
         
-        // return fn(null);
-        return fn(result);
+        return fn(null);
     });
 }
  

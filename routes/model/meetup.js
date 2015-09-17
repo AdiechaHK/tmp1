@@ -33,6 +33,3 @@ var meetup = mongoose.model('meetup',meetupSchema);
 
 module.exports = meetup;
 
-
-
-							

@@ -24,6 +24,3 @@ var yelp = mongoose.model('yelp',yelpSchema);
 
 module.exports = yelp;
 
-
-
-							

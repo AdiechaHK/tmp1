@@ -54,15 +54,14 @@ router.post('/edit',function(req,res){
 	        		upload.save();	
 	        		fs.unlinkSync(req.files.efile.path);
 	        		filecount=1;
-	        		imageurl = 'http://localhost:3000/image/'+upload._id;
+	        		imageurl = 'http://wishpool.one/image/'+upload._id;
 	        		mapinfo.findOne({_id:req.body.eid}).exec(function(err,doc){
-	        			if(doc!=null) {
-
-	        			// console.log('imageId: '+doc.ImageUrl)
-	        				uploadVideo.findOne({_id:doc.ImageUrl}).remove({},true).exec(function(err,doc){
-								if(err)
-									console.log(err);
-							});
+					if(doc!=null){
+	        			   //console.log('imageId: '+doc.imageId)
+		        		   uploadVideo.findOne({_id:doc.imageId}).remove({},true).exec(function(err,doc){
+						if(err)
+							console.log(err);
+						});
 	        				mapinfo.update({_id:req.body.eid},{$set:{
 							Latitude:req.body.elatitude,
 							Longitude:req.body.elongitude,
@@ -74,7 +73,7 @@ router.post('/edit',function(req,res){
 							EndDate:req.body.eendDate
 							}}).exec(function(err,doc){
 							// res.send('testing');
-							res.redirect("http://localhost:3000/mapinfo");
+							res.redirect("https://wishpool.one/snapmap");
 							});
 						}
 						else {
@@ -93,10 +92,12 @@ router.post('/edit',function(req,res){
 								console.log('Unable to insert new values into database @ mapinfo/')
 							else
 							// res.send(query)
-								res.redirect('http://localhost:3000/mapinfo');
+								res.redirect('https://wishpool.one/snapmap');
 							});					
+
 						}
-					});
+						});
+	        		
 	        	}
 	        })
 	} else {
@@ -117,7 +118,7 @@ router.post('/edit',function(req,res){
 				EndDate:req.body.eendDate
 				}}).exec(function(err,doc){
 					// res.send('testing');
-				res.redirect("http://localhost:3000/mapinfo/map");
+				res.redirect("https://wishpool.one/snapmap");
 			});
 		}
 		})
@@ -262,7 +263,7 @@ router.post('/addFile',function(req,res){
 	        		upload.save();	
 	        		fs.unlinkSync(req.files.file.path);
 	        		filecount=1;
-	        		var imageurl = 'http://localhost:3000/image/'+upload._id;
+	        		var imageurl = 'http://wishpool.one/image/'+upload._id;
 		        	var mapdata = new mapinfo({
 						Latitude:req.body.latitude,
 						Longitude:req.body.longitude,
@@ -277,7 +278,7 @@ router.post('/addFile',function(req,res){
 						if(err)
 							console.log('Unable to insert new values into database @ mapinfo/')
 						else
-								res.redirect('http://localhost:3000/mapinfo');					    
+								res.redirect('https://wishpool.one/snapmap');					    
 						});
 	        	}
 	        });
@@ -322,7 +323,7 @@ router.post('/addFile',function(req,res){
 				});
        		}
        	
-        	res.redirect('http://localhost:3000/mapinfo');
+        	res.redirect('https://wishpool.one/snapmap');
 	    
 		}
 	}
@@ -361,7 +362,7 @@ router.post('/files', function(req,res){
 	            for(var i=0; i<req.files.file.length; i++)
 	            	if(fs.existsSync(req.files.file[i].path))
 	            		fs.unlinkSync(req.files.file[i].path);
-	           	var imageurl = 'http://localhost:3000/image/'+upload._id;
+	           	var imageurl = 'http://wishpool.one/image/'+upload._id;
 	           	console.log(req.body);
 		
 			var mapdata = new mapinfo({
@@ -379,7 +380,7 @@ router.post('/files', function(req,res){
 			console.log('Unable to insert new values into database @ mapinfo/')
 		else
 			// res.send(query)
-				res.redirect('http://localhost:3000/mapinfo');
+				res.redirect('https://wishpool.one/snapmap');
 	    
 			});
 
@@ -390,3 +391,4 @@ router.post('/files', function(req,res){
 
 
 module.exports = router;
+
