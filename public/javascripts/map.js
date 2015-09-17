@@ -2,7 +2,7 @@ $(document).ready(function(){
     var subMenuItems = {};
     var menuAccordion = '<div id="accordion" role="tablist" aria-multiselectable="true" class="panel-group">'+
     '<div class="panel panel-default">'+
-    '<div id="cat-1" role="tab" class="panel-heading accordion-panel">'+
+    '<div id="cat-1" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
     '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-1" aria-expanded="false" aria-controls="cat-c-1" class="collapsed"><i class="fa fa-cutlery"></i> Eat and Drink</a><input type="checkbox" style="float:right"/></h4>'+
     '</div>'+
     '<div id="cat-c-1" role="tabpanel" aria-labelledby="cat-1" class="panel-collapse collapse">'+
@@ -14,7 +14,7 @@ $(document).ready(function(){
 
     '</ul>'+
     '</div>'+
-    '<div id="cat-2" role="tab" class="panel-heading accordion-panel">'+
+    '<div id="cat-2" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
     '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-2" aria-expanded="false" aria-controls="cat-c-2" class="collapsed"><i class="fa fa-shopping-cart"></i> Shopping</a><input type="checkbox" style="float:right"/></h4>'+
     '</div>'+
     '<div id="cat-c-2" role="tabpanel" aria-labelledby="cat-2" class="panel-collapse collapse">'+
@@ -33,7 +33,7 @@ $(document).ready(function(){
 
     '</ul>'+
     '</div>'+
-    '<div id="cat-3" role="tab" class="panel-heading accordion-panel">'+
+    '<div id="cat-3" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
     '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-3" aria-expanded="false" aria-controls="cat-c-3" class="collapsed"><i class="fa fa-coffee"></i> Going out</a><input type="checkbox" style="float:right"/></h4>'+
     '</div>'+
     '<div id="cat-c-3" role="tabpanel" aria-labelledby="cat-3" class="panel-collapse collapse">'+
@@ -45,7 +45,7 @@ $(document).ready(function(){
 
     '</ul>'+
     '</div>'+
-    '<div id="cat-4" role="tab" class="panel-heading accordion-panel">'+
+    '<div id="cat-4" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
     '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-4" aria-expanded="false" aria-controls="cat-c-4" class="collapsed"><i class="fa fa-bed"></i> Accommodation</a><input type="checkbox" style="float:right"/></h4>'+
     '</div>'+
     '<div id="cat-c-4" role="tabpanel" aria-labelledby="cat-4" class="panel-collapse collapse">'+
@@ -57,7 +57,7 @@ $(document).ready(function(){
 
     '</ul>'+
     '</div>'+
-    '<div id="cat-5" role="tab" class="panel-heading accordion-panel">'+
+    '<div id="cat-5" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
     '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-5" aria-expanded="false" aria-controls="cat-c-5" class="collapsed"><i class="fa fa-camera-retro"></i> Sights and Museums</a><input type="checkbox" style="float:right"/></h4>'+
     '</div>'+
     '<div id="cat-c-5" role="tabpanel" aria-labelledby="cat-5" class="panel-collapse collapse">'+
@@ -67,7 +67,7 @@ $(document).ready(function(){
 
     '</ul>'+
     '</div>'+
-    '<div id="cat-6" role="tab" class="panel-heading accordion-panel">'+
+    '<div id="cat-6" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
     '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-6" aria-expanded="false" aria-controls="cat-c-6" class="collapsed"><i class="fa fa-taxi"></i> Transport</a><input type="checkbox" style="float:right"/></h4>'+
     '</div>'+
     '<div id="cat-c-6" role="tabpanel" aria-labelledby="cat-6" class="panel-collapse collapse">'+
@@ -80,7 +80,7 @@ $(document).ready(function(){
 
     '</ul>'+
     '</div>'+
-    '<div id="cat-7" role="tab" class="panel-heading accordion-panel">'+
+    '<div id="cat-7" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
     '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-7" aria-expanded="false" aria-controls="cat-c-7" class="collapsed"><i class="fa fa-building"></i> Business and Services</a><input type="checkbox" style="float:right"/></h4>'+
     '</div>'+
     '<div id="cat-c-7" role="tabpanel" aria-labelledby="cat-7" class="panel-collapse collapse">'+
@@ -99,7 +99,7 @@ $(document).ready(function(){
 
     '</ul>'+
     '</div>'+
-    '<div id="cat-8" role="tab" class="panel-heading accordion-panel">'+
+    '<div id="cat-8" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
     '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-8" aria-expanded="false" aria-controls="cat-c-8" class="collapsed"><i class="fa fa-hospital-o"></i> Facilities</a><input type="checkbox" style="float:right"/></h4>'+
     '</div>'+
     '<div id="cat-c-8" role="tabpanel" aria-labelledby="cat-8" class="panel-collapse collapse">'+
@@ -117,7 +117,7 @@ $(document).ready(function(){
 
     '</ul>'+
     '</div>'+
-    '<div id="cat-9" role="tab" class="panel-heading accordion-panel">'+
+    '<div id="cat-9" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
     '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-9" aria-expanded="false" aria-controls="cat-c-9" class="collapsed"><i class="fa fa-umbrella"></i> Leisure & Outdoor</a><input type="checkbox" style="float:right"/></h4>'+
     '</div>'+
     '<div id="cat-c-9" role="tabpanel" aria-labelledby="cat-9" class="panel-collapse collapse">'+
@@ -127,7 +127,7 @@ $(document).ready(function(){
 
     '</ul>'+
     '</div>'+
-    '<div id="cat-10" role="tab" class="panel-heading accordion-panel">'+
+    '<div id="cat-10" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
     '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-10" aria-expanded="false" aria-controls="cat-c-10" class="collapsed"><i class="fa fa-leaf"></i> Natural or Geographical</a><input type="checkbox" style="float:right"/></h4>'+
     '</div>'+
     '<div id="cat-c-10" role="tabpanel" aria-labelledby="cat-10" class="panel-collapse collapse">'+
