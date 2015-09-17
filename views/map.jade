@@ -120,7 +120,23 @@ html
             margin-left: 0px;
             margin-top: 40px;
             position: absolute;
-            z-index: 99999;
+            z-index: 9999;
+        }
+        #accordion{
+            margin-left: 40px;
+            margin-top: 0px;
+            position: absolute;
+            width: 280px;
+            z-index: 9999;
+            -webkit-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+            -moz-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+            box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+            border: 1px solid #BDBDBD;
+        }
+        .accordion-cell{
+            background-color: #D8D8D8;
+            color: grey;
+            padding: 7px 25px;
         }
         .menu-map{
 
@@ -147,6 +163,10 @@ html
             background-color: orange;
             cursor: pointer;
             color: grey;
+        }
+        .accordion-panel:hover{
+            background-color: orange;
+            cursor: pointer;
         }
         .menu-cell span{
             font-size: 21px;
@@ -186,6 +206,8 @@ html
         div(class='input-group' id='search-group')
           a.input-group-btn.btn.btn-default.go.inline(href="#" style='position:relative; margin:0px' role="button" onclick='directionGroup()')
             img(src='../images/directions.png' width='18px'  )
+          a.input-group-btn.btn.btn-default.add_fav.inline(href="#" style='position:relative; margin:0px' role="button")
+            img(src='../images/add_favourite.png' width='18px'  )
           input.form-control(id='pac-input' type='text' style='margin:0px;' placeholder='Search Box...')
 
         div(id='direction-group')
@@ -208,49 +230,6 @@ html
           input.form-control(id='end-input' type='text' style='margin:0px; border:0px' placeholder='Choose Destination')
           div(id='route-info')
     .row.menu
-        .col-md-3.menu-map
-            .row.menu-map-container
-                .col-md-12.menu-cell(id='menu-cell-1')
-                    span.col-md-12
-                        i.fa.fa-cutlery
-                        |  Eat and Drink
-                .col-md-12.menu-cell(id='menu-cell-2')
-                    span.col-md-12
-                        i.fa.fa-shopping-cart
-                        |  Shopping
-                .col-md-12.menu-cell(id='menu-cell-3')
-                    span.col-md-12
-                        i.fa.fa-coffee
-                        |  Going out
-                .col-md-12.menu-cell(id='menu-cell-4')
-                    span.col-md-12
-                        i.fa.fa-bed
-                        |  Accommodation
-                .col-md-12.menu-cell(id='menu-cell-5')
-                    span.col-md-12
-                        i.fa.fa-camera-retro
-                        |  Sights and Museums
-                .col-md-12.menu-cell(id='menu-cell-6')
-                    span.col-md-12
-                        i.fa.fa-taxi
-                        |  Transport
-                .col-md-12.menu-cell(id='menu-cell-7')
-                    span.col-md-12
-                        i.fa.fa-building
-                        |  Business and Services
-                .col-md-12.menu-cell(id='menu-cell-8')
-                    span.col-md-12
-                        i.fa.fa-hospital-o
-                        |  Facilities
-                .col-md-12.menu-cell(id='menu-cell-9')
-                    span.col-md-12
-                        i.fa.fa-umbrella
-                        |  Leisure & Outdoor
-                .col-md-12.menu-cell(id='menu-cell-10')
-                    span.col-md-12
-                        i.fa.fa-leaf
-                        |  Natural or Geographical
-        .col-md-3.sub-menu-map
 
     #map-canvas
     script.
