@@ -1,419 +1,311 @@
 doctype html
 html
-    head
-        meta(name='viewport', content='initial-scale=1.0, user-scalable=no')
-        meta(charset='utf-8')
-        link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css")
-        title Info windows
-        style.
-            html, body, #map-canvas {
-                height: 100%;
-                margin: 0;
-                padding: 0;
-            }
+  head
+    meta(name='viewport', content='initial-scale=1.0, user-scalable=no')
+    |     
+    meta(charset='utf-8')
+    |     
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-            .sidebarone {
-                background: #21252a;
-                padding: 20px 0;
-                width: 260px !important;
-                text-align: left;
-                top: 0 !important;
-                margin-left: -1px;
-            }
+    title Info windows
+    |     
+    style.
+      html, body, #map-canvas {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      }
+      div.sidebarone{background: #071d32 !important;padding: 20px 0;width: 260px!important;text-align: left; top:0 !important; margin-left: -1px;}
+      div.sidebarone .panel-group .panel {margin-bottom: 10px;}
+      div.sidebarone .panel-group{ margin-top: 5px !important;}
+      div.sidebarone .panel-default > .panel-heading {background-color: #071d32;font-family: roboto;color: #7e7f81; text-decoration: none !important;}
+      div.sidebarone .panel{border: 0 none !important; box-shadow:none;}
+      div.sidebarone .collapse.in {background-color: #406a9e;color: #e6e6e7;}
+      div.sidebarone .collapse.in:focus, .collapse.in:hover{ background:#406a9e !important;}
+      div.sidebarone .panel-default > .panel-heading:hover{ color:#fff;}
+      div.sidebarone .panel-heading .panel-title a:focus,.panel-heading .panel-title a:hover{ text-decoration:none !important; outline:none !important;}
+      div.sidebarone .panel-default > .panel-heading + .panel-collapse > .panel-body{border-top:0;border-top-color: #000 !important;}
+      div.sidebarone button.close{ padding: 0 15px 0 0 !important;}
+      div.sidebarone #accor{ margin: -52px -6px 0 0 !important; width: 260px;}
+      div.sidebarone .gm-style {font-family: citrixsans-regular,Helvetica,sans-serif !important;}
+      div.sidebarone .close, .close:focus, .close:hover{color: #fff !important;}
+      div.sidebarone button.close { margin: -6px 0 0;  font-size: 32px !important;}
+      div.sidebarone #accordion-right-menu .panel-heading a i{ padding: 0 10px 0 0; vertical-align: middle;}
+      div.sidebarone .panel-body #gmarkers{margin: 0 0 0 18px;  font-family: roboto;}
+      div.sidebarone .sublist{list-style:none; margin:0; padding:0;}
+      div.sidebarone .sublist li{padding: 4px 35px;}
+      div.sidebarone .panel-body {padding: 10px 15px;}
+      div.sidebarone input[type="checkbox"], input[type="radio"]{ margin: 4px 8px 0 0;}
+      div.sidebarone #collapseThree .panel-body{padding: 4px 15px;}
+      div.sidebarone #collapseTwo, #collapseThree{ height:158px; overflow-y:scroll;}
+      div.sidebarone .sublist li:hover, #collapseThree .panel-body:hover, #collapseOne .panel-body:hover, #collapseFour .panel-body:hover{background-color: #076091 !important;}
+      div.sidebarone .panel.panel-default .panel-heading h4 a span{float: right;}
+      .panel-heading .accordion-toggle:after {
+       font-family: 'Glyphicons Halflings';
+       content: "\2212";
+       float: right;
+       color: white;
+      }
+      .panel-heading .accordion-toggle.collapsed:after {
+       content: "\2b";
+      }
+      @media only screen and (min-width : 1200px) {
+        .carousel-dates
+        {
+          top: 75%;
+          position: absolute;
+          right: 15%;
+          bottom: 10%;
+          left: 15%;
+          z-index: 10;
+          padding-top: 20px;
+          color: #fff;
+          text-align: center;
+          text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+        }
+        div.sidebarone{ background: #071d32 !important;padding: 20px 0;width: 260px!important;text-align: left; top:0 !important; margin-left: -1px;}
+        div.sidebarone .panel-group .panel {margin-bottom: 10px;}.panel-group{ margin-top: 5px !important;}
+        div.sidebarone .panel-default > .panel-heading {font-family: roboto; background-color: #071d32;color: #7e7f81; text-decoration: none !important; padding:10px 30px !important;}
+        div.sidebarone .panel{border: 0 none !important; box-shadow:none;}
+        div.sidebarone .collapse.in {background-color: #406a9e;color: #e6e6e7;}
+        div.sidebarone .collapse.in:focus, .collapse.in:hover{ background:#406a9e !important;}
+        div.sidebarone .panel-default > .panel-heading:hover{ color:#fff; background: #05071c}
+        div.sidebarone .panel-heading .panel-title a:focus,.panel-heading .panel-title a:hover{ text-decoration:none !important; outline:none !important;}
+        div.sidebarone .panel-default > .panel-heading + .panel-collapse > .panel-body{border-top:0;border-top-color: #000 !important;}
+        div.sidebarone button.close{ padding: 0 15px 0 0 !important;}
+        div.sidebarone #accor{ margin: -52px -6px 0 0 !important; width: 260px;}
+        div.sidebarone .gm-style {font-family: citrixsans-regular,Helvetica,sans-serif !important;}
+        div.sidebarone .close, .close:focus, .close:hover{color: #fff !important;}
+        div.sidebarone button.close { margin: -6px 0 0;   font-size: 32px !important; }
+        div.sidebarone #accordion-right-menu .panel-heading a i{ padding: 0 10px 0 0; vertical-align: middle;}
+        div.sidebarone .panel-body #gmarkers{margin: 0 0 0 18px;  font-family: roboto;}
+        div.sidebarone .sublist li:hover, .panel-body:hover {background:#076091 !important}                           
+        .carousel-info
+        {
+          top: 0%;
+          position: absolute;
+          right: 20%;
+          bottom: 20px;
+          left: 80%;
+          z-index: 10;
+          padding-top: 5px;
+          padding-bottom: 20px;
+          color: #fff;
+          text-align: center;
+          text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+        }
+        .carousel-caption
+        {
+          top: 0%;
+        }
+        .comment 
+        {
+          top: 88%;
+          position: absolute;
+          right: 5%;
+          bottom: %;
+          left: 5%;
+          z-index: 10;
+          padding-top: 5px;
+          padding-bottom: 20px;
+          text-align: center;
+         
+        }
+	
+      }
+	   
+	  
+        .verticalLine {
+          border-left: thick solid #ff0000;
+        }
+        #pac-input {
+          background-color: #fff;
+          font-family: Roboto;
+          font-size: 15px;
+          font-weight: 300;
+          margin-left: 12px;
+          padding: 0 11px 0 13px;
+          text-overflow: ellipsis;
+          width: 300px;
+        }
 
-            .panel-group .panel {
-                margin-bottom: 10px;
-            }
+        #pac-input:focus {
+          border-color: #4d90fe;
+        }
 
-            .panel-group {
-                margin-top: 5px !important;
-            }
+        .pac-container {
+          font-family: Roboto;
+        }
+        .controls {
+         position:relevant;
+         margin-top: 0px;
+         padding:6px;
+         z-index:105;
+         border: 1px solid transparent;
+         border-radius: 2px 0 0 2px;
+          box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          width:350px;
+          outline: none;
+        }
+        #type-selector {
+          color: #fff;
+          background-color: #4d90fe;
+          padding: 5px 11px 0px 11px;
+        }
 
-            .panel-default > .panel-heading {
-                background-color: #21252a;
-                color: #7e7f81;
-                text-decoration: none !important;
-                padding: 10px 30px !important;
-            }
+        #type-selector lgbel {
+          font-family: Roboto;
+          font-size: 13px;
+          font-weight: 300;
+        }
+        #target {
+            width: 345px;
+        }       
+        .menu{
+            margin-left: 0px;
+            margin-top: 40px;
+            position: absolute;
+            z-index: 9999;
+        }
+        #accordion{
+            background-color: #3A4352;
+            margin-left: 40px;
+            margin-top: 0px;
+            position: absolute;
+            width: 280px;
+            z-index: 9999;
+            -webkit-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+            -moz-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+            box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+        }
+        .accordion-cell{
+            background-color: #0a69a1;
+            color: white;
+        }
+        .accordion-cell:hover{
+            background-color: #076091;
+            cursor: pointer;
+            color: white;
+        }
 
-            .panel {
-                border: 0 none !important;
-                box-shadow: none;
-            }
+        .menu-map{
 
-            .collapse.in {
-                background-color: #000;
-                color: #e6e6e7;
-            }
+            background-color: #071d32;
+            color: white;
+            margin-left: 41px;
+            padding: 7px 7px;
+            -webkit-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+            -moz-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+            box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+        }
+        .sub-menu-map{
 
-            .collapse.in:focus, .collapse.in:hover {
-                background: #000 !important;
-            }
+            background-color: #406a9e;
+            color: white;
+            padding: 7px 7px;
+            -webkit-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+            -moz-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+            box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+        }
+        .menu-cell span:hover{
+            background-color: #05071c;
+            cursor: pointer;
+            color: white;
+        }
+        .accordion-panel:hover{
+            background-color: #05071c;
+            cursor: pointer;
+            color: white;
+        }
+        .menu-cell span{
+            font-size: 21px;
+            padding: 5px;
+            color: white;
+        }
+        .sub-menu-cell span:hover{
+            background-color: #076091;
+            cursor: pointer;
+            color: white;
+        }
+        .sub-menu-cell span{
+            font-size: 16px;
+            padding: 5px;
+            color: white;
+        }
+        .menu-cell span input{
+            margin-top: 10px;
+        }
+        
+    |     
+    script.
+     var mapInfo = !{JSON.stringify(mapData)}
+    
+    script(src='../lib/angular.min.js')
+    script(src='../lib/ui-bootstrap-tpls-0.13.1.min.js')
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"" ></script>
+    script(src='../lib/markerclusterer.js')
+    | &#x9;
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    script(src='../lib/maps.js')
+  body
+    .controls(id='pac-in')
+      div(class='input-group' id='button-search')
+        a.input-group-btn.btn.btn-default(href="#" role="button" style='width:18px; height:20px; margin:0px;padding:0px;' onclick='toggleInput()')
+          img(src='../imgs/search.jpg' width='32px')
+          //button.btn.btn-default(type='button' style='margin:0px; padding:0px;' onclick='toggleInput()')
+            
+        div(class='input-group' id='search-group')
+          a.input-group-btn.btn.btn-default.go.inline(href="#" style='position:relative; margin:0px' role="button" onclick='directionGroup()')
+            img(src='../imgs/directions.png' width='18px'  )
+          a.input-group-btn.btn.btn-default.add_fav.inline(href="#" style='position:relative; margin:0px' role="button")
+            img(src='../imgs/add_favourite.png' width='18px'  )
+          input.form-control(id='pac-input' type='text' style='margin:0px;' placeholder='Search Box...')
 
-            .panel-default > .panel-heading:hover {
-                color: #fff;
-            }
+        div(id='direction-group')
+          a.input-group-btn.btn.btn-default(href="#" role="button" )
+            img(src='../imgs/directions.png' width='18px')
+          a.input-group-btn.btn.btn-default(href="#" role="button"  onclick='directionInfo(\'WALKING\')')
+            img(src='../imgs/walking.png' width='18px')
+          a.input-group-btn.btn.btn-default(href="#" role="button" onclick='directionInfo(\'BICYCLING\')')
+            img(src='../imgs/cycling.jpg' width='18px')
+          a.input-group-btn.btn.btn-default(href="#" role="button" onclick='directionInfo(\'TRANSIT\')')
+            img(src='../imgs/transit.png' width='18px')
+          a.input-group-btn.btn.btn-default(href="#" role="button" onclick='directionInfo(\'DRIVING\')')
+            img(src='../imgs/driving.jpg' width='18px')
+          a.input-group-btn.btn.btn-default(href="#" role="button" onclick='searchGroup()')
+            img(src='../imgs/close.png' width='18px')
 
-            .panel-heading .panel-title a:focus, .panel-heading .panel-title a:hover {
-                text-decoration: none !important;
-                outline: none !important;
-            }
+      div(id='startend-group')
+          input.form-control(id='start-input' type='text' style='margin:0px; border:0px' placeholder='Choose Starting point')
+          hr(style='margin:0px;')
+          input.form-control(id='end-input' type='text' style='margin:0px; border:0px' placeholder='Choose Destination')
+          div(id='route-info')
+    .row.menu
 
-            .panel-default > .panel-heading + .panel-collapse > .panel-body {
-                border-top-color: #000 !important;
-            }
+    #map-canvas
+    script.
+      $('#direction-group').hide();
+      $('#search-group').hide();
+      $('#startend-group').hide();
+      function directionGroup() {
+        $('#search-group').toggle();
+        $('#direction-group').toggle();
+        $('#startend-group').toggle();
+      }
+      function toggleInput(){
+        $('#search-group').toggle();
+        if(!$('#search-group').is(':hidden') || !$('#direction-group').is(':hidden'))
+          $('#pac-in').css('z-index','10');
+        else
+            $('#pac-in').css('z-index','0');
 
-            button.close {
-                padding: 0 15px 0 0 !important;
-            }
-
-            #accor {
-                margin: -52px -6px 0 0 !important;
-                width: 260px;
-            }
-
-            .gm-style {
-                font-family: citrixsans-regular, Helvetica, sans-serif !important;
-            }
-
-            .close, .close:focus, .close:hover {
-                color: #fff !important;
-            }
-
-            button.close {
-                margin: -6px 0 0;
-            }
-
-            .sidebarone #accordion .panel-heading a i {
-                padding: 0 10px 0 0;
-                vertical-align: middle;
-            }
-
-            .panel-body #gmarkers {
-                margin: 0 0 0 42px;
-            }
-
-            .panel {
-                background-color: #000;
-            }
-
-            @media only screen and (min-width: 1200px) {
-                .carousel-dates {
-                    top: 75%;
-                    position: absolute;
-                    right: 15%;
-                    bottom: 10%;
-                    left: 15%;
-                    z-index: 10;
-                    padding-top: 20px;
-                    color: #fff;
-                    text-align: center;
-                    text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
-                }
-
-                .sidebarone {
-                    background: #21252a;
-                    padding: 20px 0;
-                    width: 260px !important;
-                    text-align: left;
-                    top: 0 !important;
-                    margin-left: -1px;
-                }
-
-                .panel-group .panel {
-                    margin-bottom: 10px;
-                }
-
-                .panel-group {
-                    margin-top: 5px !important;
-                }
-
-                .panel-default > .panel-heading {
-                    background-color: #21252a;
-                    color: #7e7f81;
-                    text-decoration: none !important;
-                    padding: 10px 30px !important;
-                }
-
-                .panel {
-                    border: 0 none !important;
-                    box-shadow: none;
-                }
-
-                .collapse.in {
-                    background-color: #000;
-                    color: #e6e6e7;
-                }
-
-                .collapse.in:focus, .collapse.in:hover {
-                    background: #000 !important;
-                }
-
-                .panel-default > .panel-heading:hover {
-                    color: #fff;
-                }
-
-                .panel-heading .panel-title a:focus, .panel-heading .panel-title a:hover {
-                    text-decoration: none !important;
-                    outline: none !important;
-                }
-
-                .panel-default > .panel-heading + .panel-collapse > .panel-body {
-                    border-top-color: #000 !important;
-                }
-
-                button.close {
-                    padding: 0 15px 0 0 !important;
-                }
-
-                #accor {
-                    margin: -52px -6px 0 0 !important;
-                    width: 260px;
-                }
-
-                .gm-style {
-                    font-family: citrixsans-regular, Helvetica, sans-serif !important;
-                }
-
-                .close, .close:focus, .close:hover {
-                    color: #fff !important;
-                }
-
-                button.close {
-                    margin: -6px 0 0;
-                }
-
-                .sidebarone #accordion .panel-heading a i {
-                    padding: 0 10px 0 0;
-                    vertical-align: middle;
-                }
-
-                .panel-body #gmarkers {
-                    margin: 0 0 0 42px;
-                }
-
-                .panel {
-                    background-color: #000;
-                }
-
-                .carousel-info {
-                    top: 0%;
-                    position: absolute;
-                    right: 20%;
-                    bottom: 20px;
-                    left: 80%;
-                    z-index: 10;
-                    padding-top: 5px;
-                    padding-bottom: 20px;
-                    color: #fff;
-                    text-align: center;
-                    text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
-                }
-
-                .carousel-caption {
-                    top: 0%;
-                }
-
-                .comment {
-                    top: 88%;
-                    position: absolute;
-                    right: 5%;
-                    bottom:%;
-                    left: 5%;
-                    z-index: 10;
-                    padding-top: 5px;
-                    padding-bottom: 20px;
-                    text-align: center;
-                }
-            }
-
-            .verticalLine {
-                border-left: thick solid #ff0000;
-            }
-
-            #pac-input {
-                background-color: #fff;
-                font-family: Roboto;
-                font-size: 15px;
-                font-weight: 300;
-                margin-left: 12px;
-                padding: 0 11px 0 13px;
-                text-overflow: ellipsis;
-                width: 300px;
-            }
-
-            #pac-input:focus {
-                border-color: #4d90fe;
-            }
-
-            .pac-container {
-                font-family: Roboto;
-            }
-
-            .controls {
-                position: relevant;
-                margin-top: 0px;
-                padding: 6px;
-                z-index: 105;
-                border: 1px solid transparent;
-                border-radius: 2px 0 0 2px;
-                box-sizing: border-box;
-                -moz-box-sizing: border-box;
-                width: 350px;
-                outline: none;
-            }
-
-            #type-selector {
-                color: #fff;
-                background-color: #4d90fe;
-                padding: 5px 11px 0px 11px;
-            }
-
-            #type-selector label {
-                font-family: Roboto;
-                font-size: 13px;
-                font-weight: 300;
-            }
-
-            #target {
-                width: 345px;
-            }
-            .menu{
-                margin-left: 0px;
-                margin-top: 40px;
-                position: absolute;
-                z-index: 9999;
-            }
-            #accordion{
-                background-color: #3A4352;
-                margin-left: 40px;
-                margin-top: 0px;
-                position: absolute;
-                width: 280px;
-                z-index: 9999;
-                -webkit-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
-                -moz-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
-                box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
-            }
-            .accordion-cell{
-                background-color: #0a69a1;
-                color: white;
-            }
-            .accordion-cell:hover{
-                background-color: #076091;
-                cursor: pointer;
-                color: white;
-            }
-
-            .menu-map{
-
-                background-color: #071d32;
-                color: white;
-                margin-left: 41px;
-                padding: 7px 7px;
-                -webkit-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
-                -moz-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
-                box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
-            }
-            .sub-menu-map{
-
-                background-color: #406a9e;
-                color: white;
-                padding: 7px 7px;
-                -webkit-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
-                -moz-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
-                box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
-            }
-            .menu-cell span:hover{
-                background-color: #05071c;
-                cursor: pointer;
-                color: white;
-            }
-            .accordion-panel:hover{
-                background-color: #05071c;
-                cursor: pointer;
-                color: white;
-            }
-            .menu-cell span{
-                font-size: 21px;
-                padding: 5px;
-                color: white;
-            }
-            .sub-menu-cell span:hover{
-                background-color: #076091;
-                cursor: pointer;
-                color: white;
-            }
-            .sub-menu-cell span{
-                font-size: 16px;
-                padding: 5px;
-                color: white;
-            }
-            .menu-cell span input{
-                margin-top: 10px;
-            }
-
-        script.
-            var mapInfo = !{JSON.stringify(mapData)}
-        script(src='../lib/angular.min.js')
-        script(src='../lib/ui-bootstrap-tpls-0.13.1.min.js')
-        script(src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false")
-        script(src='../lib/markerclusterer.js')
-        | &#x9;
-        script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js")
-        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
-        script(src='../lib/maps.js')
-    body
-        .controls(id='pac-in')
-            div(class='input-group' id='button-search')
-                a.input-group-btn.btn.btn-default(href="#" role="button" style='width:18px; height:20px; margin:0px;padding:0px;' onclick='toggleInput()')
-                    img(src='../imgs/search.jpg' width='32px')
-                    //button.btn.btn-default(type='button' style='margin:0px; padding:0px;' onclick='toggleInput()')
-                div(class='input-group' id='search-group')
-                    a.input-group-btn.btn.btn-default.go.inline(href="#" style='position:relative; margin:0px' role="button" onclick='directionGroup()')
-                        img(src='../imgs/directions.png' width='18px'  )
-                    a.input-group-btn.btn.btn-default.add_fav.inline(href="#" style='position:relative; margin:0px' role="button")
-                        img(src='../images/add_favourite.png' width='18px'  )
-                    input.form-control(id='pac-input' type='text' style='margin:0px;' placeholder='Search Box...')
-                div(id='direction-group')
-                    a.input-group-btn.btn.btn-default(href="#" role="button" )
-                        img(src='../imgs/directions.png' width='18px')
-                    a.input-group-btn.btn.btn-default(href="#" role="button"  onclick='directionInfo(\'WALKING\')')
-                        img(src='../imgs/walking.png' width='18px')
-                    a.input-group-btn.btn.btn-default(href="#" role="button" onclick='directionInfo(\'BICYCLING\')')
-                        img(src='../imgs/cycling.jpg' width='18px')
-                    a.input-group-btn.btn.btn-default(href="#" role="button" onclick='directionInfo(\'TRANSIT\')')
-                        img(src='../imgs/transit.png' width='18px')
-                    a.input-group-btn.btn.btn-default(href="#" role="button" onclick='directionInfo(\'DRIVING\')')
-                        img(src='../imgs/driving.jpg' width='18px')
-                    a.input-group-btn.btn.btn-default(href="#" role="button" onclick='searchGroup()')
-                        img(src='../imgs/close.png' width='18px')
-                div(id='startend-group')
-                    input.form-control(id='start-input' type='text' style='margin:0px; border:0px' placeholder='Choose Starting point')
-                    hr(style='margin:0px;')
-                    input.form-control(id='end-input' type='text' style='margin:0px; border:0px' placeholder='Choose Destination')
-                    div(id='route-info')
-        .row.menu
-        #map-canvas
-        script.
-            $('#direction-group').hide();
-            $('#search-group').hide();
-            $('#startend-group').hide();
-            function directionGroup() {
-              $('#search-group').toggle();
-              $('#direction-group').toggle();
-              $('#startend-group').toggle();
-            }
-            function toggleInput(){
-              $('#search-group').toggle();
-              if(!$('#search-group').is(':hidden') || !$('#direction-group').is(':hidden'))
-                $('#pac-in').css('z-index','10');
-              else
-                  $('#pac-in').css('z-index','0');
-                                         if(!$('#direction-group').is(':hidden')) {
-                console.log('Not Hidden');
-                directionGroup()
-                searchGroup()
-              }
-            }
-        script(src='../javascripts/map.js')
+        if(!$('#direction-group').is(':hidden')) {
+          console.log('Not Hidden');
+          directionGroup()
+          searchGroup()
+        }
+      }
+   script(src='../javascripts/map.js')
