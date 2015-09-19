@@ -55,10 +55,16 @@ function getGeolocation() {
     pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     currPosition = {lat:position.coords.latitude, lng:position.coords.longitude};
       map.setCenter(pos)
-      if(mobile)
+      mapSatellite.setCenter(pos);
+      if(mobile) {
         map.setZoom(15)
-      else
+        mapSatellite.setZoom(15)
+      }
+      else {
         map.setZoom(16)
+        mapSatellite.setZoom(16)
+      }
+
     });
   }
 
@@ -98,16 +104,30 @@ function AccordionControl(controlDiv,map) {
   controlText.style.display = 'none';
   // controlText.style.paddingRight = '2px';
   
-var text = '<div class="bs-example sidebarone" style="width:450px; height:2000px;">&nbsp;<button type="button" class="close" onclick="closeAccordion()">×</button> <div class="panel-group" id="accordion"> <div class="panel panel-default"> <div class="panel-heading"> <h4 class="panel-title">'+
-              '<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><i class="glyphicon glyphicon-map-marker"></i>Clustered</a> </h4> </div> <div id="collapseOne" class="panel-collapse collapse in">'+
+var text = '<div class="bs-example sidebarone" style="width:450px; height:768px;">&nbsp;<button type="button" class="close" onclick="closeAccordion()">×</button> ' +
+                '<div >'+
+                '<ul class="nav nav-tabs" role="tablist">'+
+                '<li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab"><img src="../imgs/add_favourite-white.png" width="18px"></a></li>'+
+                '<li role="presentation" ><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">tab2</a></li>'+
+                '<li role="presentation" ><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">tab3</a></li>'+
+                '</ul>'+
+                '<div class="tab-content">'+
+                '<div role="tabpanel" class="tab-pane active" id="tab1">yolo1</div>'+
+                '<div role="tabpanel" class="tab-pane" id="tab2">yolo2</div>'+
+                '<div role="tabpanel" class="tab-pane" id="tab3">yolo3</div>'+
+                '</div>'+
+                '</div>'+
+                '<div class="panel-group" id="accordion-right-menu"> <div class="panel panel-default"> <div class="panel-heading"> <h4 class="panel-title">'+
+
+              '<a  href="#collapseOne" aria-expanded="true" style="pointer-events: none"><i class="glyphicon glyphicon-map-marker"></i>Clustered <span aria-hidden="true"></span></a> </h4> </div> <div id="collapseOne" class="panel-collapse" style="background:#406a9e; color:#fff">'+
               '<div class="panel-body" align="left"><div id="gmarkers" align="left">First Tab Information</div> </div> </div> </div>'+
               '<div class="panel panel-default"> <div class="panel-heading"> <h4 class="panel-title"> '+
-                '<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><i class="glyphicon glyphicon-tags"></i>Category</a> </h4> </div> <div id="collapseTwo" class="panel-collapse collapse">'+
-                '<div class="panel-body"><div id="gmarkers" >Second Tab Information</div> </div> </div></div>'+
-                '<div class="panel panel-default"><div class="panel-heading"> <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><i class="glyphicon glyphicon-calendar"></i>Event Type</a>'+
-                '</h4> </div> <div id="collapseThree" class="panel-collapse collapse"> <div class="panel-body"> <div id="gmarkers">Coming Soon...</div></div></div> </div>'+
+                '<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-right-menu"  href="#collapseTwo"><i class="glyphicon glyphicon-tags"></i>Category</a> </h4> </div> <div id="collapseTwo" class="panel-collapse collapse">'+
+                '<ul class="sublist"><li><input type="checkbox"> All Categories</li><li><input type="checkbox"> Business</li><li><input type="checkbox"> Hobbies</li><li><input type="checkbox"> Other</li><li><input type="checkbox"> Music</li><li><input type="checkbox"> Travel &amp; Outdoor </li><li><input type="checkbox"> Science & Tech</li><li><input type="checkbox"> Auto, Boat & Air</li><li><input type="checkbox"> Food & Drink</li><li><input type="checkbox"> Film & Media</li><li><input type="checkbox"> Arts</li><li><input type="checkbox"> Sports & Fitness</li><li><input type="checkbox"> Health</li><li><input type="checkbox"> Community</li><li><input type="checkbox"> Charity &amp; Causes</li><li><input type="checkbox"> Fashion</li><li><input type="checkbox"> Family &amp; Education</li><li><input type="checkbox"> Government</li><li><input type="checkbox"> Holiday</li><li><input type="checkbox"> Spirituality</li><li><input type="checkbox"> Home &amp; Lifestyle</li></ul> </div></div>'+
+                '<div class="panel panel-default"><div class="panel-heading"> <h4 class="panel-title"> <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-right-menu"  href="#collapseThree"><i class="glyphicon glyphicon-calendar"></i>Event Type</a>'+
+                '</h4> </div> <div id="collapseThree" class="panel-collapse collapse"> <div class="panel-body"> <div id="gmarkers"> <input type="checkbox"> All Event Types</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Class</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Tour</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Performance</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Networking</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Retreat</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Conference</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Seminar</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Party</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Gala</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Game</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Other</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Festival</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Expo</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Race</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Screening</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Attraction</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Convention</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Tournament</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Appearance</div></div>    </div> </div>'+
               '<div class="panel panel-default"> <div class="panel-heading"> <h4 class="panel-title"> '+
-                '<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><i class="glyphicon glyphicon-time"></i>Time</a> </h4> </div> <div id="collapseFour" class="panel-collapse collapse">'+
+                '<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-right-menu"  href="#collapseFour"><i class="glyphicon glyphicon-time"></i>Time</a> </h4> </div> <div id="collapseFour" class="panel-collapse collapse">'+
                 '<div class="panel-body"><div id="gmarkers" >Coming Soon...</div> <div id="accorObj"></div> </div></div></div>'+
                 '</div></div>'  ;
 
@@ -258,14 +278,13 @@ function accorDisplay(objects) {
 
 	$.ajax({
       type: 'POST',
-      
-       url: '/snapmap/location/',
-       data: {
-              markObj: objects
+      url: '/snapmap/location',
+      data: {
+          markObj: objects
             },
         dataType: 'JSON'
     }).done(function (response){
-             console.log(response);
+            // console.log(response);
       var records = [];
         for(var i=0; i<response.length;i++)
           for(var j=0; j<response[i].length; j++) {
@@ -287,6 +306,7 @@ function accorDisplay(objects) {
 
 
 var map='';
+var mapSatellite='';
 var currPosition='';
 var infwindow='';
 var infowindow
@@ -305,16 +325,32 @@ function initialize() {
         style: google.maps.ZoomControlStyle.SMALL,
         position: google.maps.ControlPosition.RIGHT_BOTTOM
     },
-    mapTypeControlOptions: {
-        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-        position: google.maps.ControlPosition.LEFT_BOTTOM
-    },
+    mapTypeControl: false,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+
     disableDoubleClickZoom: true
   };
+  var mapSatelliteOptions = {
+    zoom:1,
+    center:pos,
+    mapTypeId: google.maps.MapTypeId.SATELLITE
+  }
+
    
    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-   if(!mobile)
+   var divMapSatellite = document.getElementById('map-satellite');
+   map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(divMapSatellite);
+   mapSatellite = new google.maps.Map(document.getElementById('map-satellite'), mapSatelliteOptions);
+   if(!mobile) {
     map.setZoom(2);
+    mapSatellite.setZoom(2);
+   }
+    google.maps.event.addListener(map, 'zoom_changed', zoomChange);    
+    google.maps.event.addListener(map, 'idle', placeChange);    
+
+    google.maps.event.addListener(mapSatellite, 'zoom_changed', zoomChange_S);    
+    google.maps.event.addListener(mapSatellite, 'idle', placeChange_S);    
+
     google.maps.event.addListener(map, 'dblclick', function(e) {
    placeMarker(e.latLng, map);
    });
@@ -473,6 +509,8 @@ function addSearchButton(map) {
       }
     });
     map.fitBounds(bounds);
+    mapSatellite.fitBounds(bounds);
+    mapSatellite.setZoom(map.getZoom());
   });
 
 }
@@ -787,6 +825,33 @@ function setMarkers(branches, map) {
 	var markerCluster = new MarkerClusterer(map, markers);
    // map.fitBounds(bounds);
 }
+
+function zoomChange() {
+  // console.log(map.getZoom())
+  
+  placeChange();
+}
+
+function placeChange() {
+    
+  mapSatellite.setCenter(map.getCenter());
+  if(map.getZoom()>7)
+    mapSatellite.setZoom(map.getZoom()-4)
+  else if(map.getZoom()>4)
+    mapSatellite.setZoom(map.getZoom()-3)
+  else
+    mapSatellite.fitBounds(map.getBounds());  
+  
+}
+
+function zoomChange_S(){
+//No implementation required, but skeleton required    
+}
+
+function placeChange_S() {
+  console.log('Place Changing:: '+mapSatellite.getCenter());
+  map.setCenter(mapSatellite.getCenter())
+ }
 
 google.maps.event.addDomListener(window, 'load', initialize);
 

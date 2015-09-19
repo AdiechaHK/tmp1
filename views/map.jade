@@ -129,6 +129,14 @@ html
           text-overflow: ellipsis;
           width: 300px;
         }
+        #map-satellite {
+            width:80px;
+            height:80px;
+	    margin:0px;
+            margin-bottom:-30px;
+            border:thin solid;
+            border-color:white;
+        }
 
         #pac-input:focus {
           border-color: #4d90fe;
@@ -168,6 +176,7 @@ html
             margin-top: 40px;
             position: absolute;
             z-index: 9999;
+            width:75%
         }
         #accordion{
             background-color: #3A4352;
@@ -209,7 +218,7 @@ html
             -moz-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
             box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
         }
-        .menu-cell span:hover{
+        .menu-cell-hover{
             background-color: #05071c;
             cursor: pointer;
             color: white;
@@ -236,6 +245,70 @@ html
         }
         .menu-cell span input{
             margin-top: 10px;
+        }
+        .sub-menu-cell span{
+            font-size: 15px;
+            padding: 10px;
+            color: white;
+        }
+        .menu-cell span{
+            font-size: 15px;
+            padding: 10px;
+        }
+
+
+
+        .nav-tabs > li > a {
+            margin-right: 2px;
+            line-height: 1.42857143;
+            border: 1px solid transparent;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .nav > li > a {
+            position: relative;
+            display: block;
+            padding: 10px 15px;
+        }
+
+        .nav-tabs > li.active > a{
+            color: #555;
+            cursor: default;
+             background-color: transparent;
+             border: none;
+             border-bottom-color: transparent;
+        }.nav-tabs > li > a{
+            color: #ffffff;
+            cursor: default;
+             background-color: transparent;
+             border: none;
+             border-bottom-color: transparent;
+        }
+
+        .nav-tabs > li > a:hover {
+            border-color: transparent;
+            background-color: transparent;
+        }.nav-tabs > li.active > a:hover {
+            border-color: transparent;
+            background-color: transparent;
+        }
+        .nav-tabs > li.active > a:focus {
+            border-color: transparent;
+            background-color: transparent;
+        }
+        .nav-tabs > li.active > a:active {
+            border-color: transparent;
+            background-color: transparent;
+        }
+
+        .nav-tabs {
+             border-bottom: none;
+            padding: 0px 15px;
+        }
+        .active{
+            background-color: transparent;
+            border: none;
+            border-bottom-color: transparent;
         }
         
     |     
@@ -283,8 +356,8 @@ html
           hr(style='margin:0px;')
           input.form-control(id='end-input' type='text' style='margin:0px; border:0px' placeholder='Choose Destination')
           div(id='route-info')
-    .row.menu
-
+    .menu
+    #map-satellite(onclick='togglemap()')
     #map-canvas
     script.
       $('#direction-group').hide();
@@ -306,6 +379,16 @@ html
           console.log('Not Hidden');
           directionGroup()
           searchGroup()
+        }
+      }
+      function togglemap() {
+        if(map.getMapTypeId()=='roadmap') {
+          map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+          mapSatellite.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+        }
+        else {
+          map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+          mapSatellite.setMapTypeId(google.maps.MapTypeId.SATELLITE);
         }
       }
    script(src='../javascripts/map.js')
