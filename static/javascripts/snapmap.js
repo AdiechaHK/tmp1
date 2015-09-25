@@ -55,10 +55,16 @@ function getGeolocation() {
     pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     currPosition = {lat:position.coords.latitude, lng:position.coords.longitude};
       map.setCenter(pos)
-      if(mobile)
+      mapSatellite.setCenter(pos);
+      if(mobile) {
         map.setZoom(15)
-      else
+        mapSatellite.setZoom(15)
+      }
+      else {
         map.setZoom(16)
+        mapSatellite.setZoom(16)
+      }
+
     });
   }
 
@@ -98,19 +104,190 @@ function AccordionControl(controlDiv,map) {
   controlText.style.display = 'none';
   // controlText.style.paddingRight = '2px';
   
-var text = '<div class="bs-example sidebarone" style="width:450px; height:768px;">&nbsp;<button type="button" class="close" onclick="closeAccordion()">×</button> <div class="panel-group" id="accordion-right-menu"> <div class="panel panel-default"> <div class="panel-heading"> <h4 class="panel-title">'+
-              '<a  href="#collapseOne" aria-expanded="true" style="pointer-events: none"><i class="glyphicon glyphicon-map-marker"></i>Clustered <span aria-hidden="true"></span></a> </h4> </div> <div id="collapseOne" class="panel-collapse" style="background:#406a9e; color:#fff">'+
-              '<div class="panel-body" align="left"><div id="gmarkers" align="left">First Tab Information</div> </div> </div> </div>'+
-              '<div class="panel panel-default"> <div class="panel-heading"> <h4 class="panel-title"> '+
-                '<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-right-menu"  href="#collapseTwo"><i class="glyphicon glyphicon-tags"></i>Category</a> </h4> </div> <div id="collapseTwo" class="panel-collapse collapse">'+
-                '<ul class="sublist"><li><input type="checkbox"> All Categories</li><li><input type="checkbox"> Business</li><li><input type="checkbox"> Hobbies</li><li><input type="checkbox"> Other</li><li><input type="checkbox"> Music</li><li><input type="checkbox"> Travel &amp; Outdoor </li><li><input type="checkbox"> Science & Tech</li><li><input type="checkbox"> Auto, Boat & Air</li><li><input type="checkbox"> Food & Drink</li><li><input type="checkbox"> Film & Media</li><li><input type="checkbox"> Arts</li><li><input type="checkbox"> Sports & Fitness</li><li><input type="checkbox"> Health</li><li><input type="checkbox"> Community</li><li><input type="checkbox"> Charity &amp; Causes</li><li><input type="checkbox"> Fashion</li><li><input type="checkbox"> Family &amp; Education</li><li><input type="checkbox"> Government</li><li><input type="checkbox"> Holiday</li><li><input type="checkbox"> Spirituality</li><li><input type="checkbox"> Home &amp; Lifestyle</li></ul> </div></div>'+
-                '<div class="panel panel-default"><div class="panel-heading"> <h4 class="panel-title"> <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-right-menu"  href="#collapseThree"><i class="glyphicon glyphicon-calendar"></i>Event Type</a>'+
-                '</h4> </div> <div id="collapseThree" class="panel-collapse collapse"> <div class="panel-body"> <div id="gmarkers"> <input type="checkbox"> All Event Types</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Class</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Tour</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Performance</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Networking</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Retreat</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Conference</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Seminar</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Party</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Gala</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Game</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Other</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Festival</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Expo</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Race</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Screening</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Attraction</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Convention</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Tournament</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Appearance</div></div>    </div> </div>'+
-              '<div class="panel panel-default"> <div class="panel-heading"> <h4 class="panel-title"> '+
-                '<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-right-menu"  href="#collapseFour"><i class="glyphicon glyphicon-time"></i>Time</a> </h4> </div> <div id="collapseFour" class="panel-collapse collapse">'+
-                '<div class="panel-body"><div id="gmarkers" >Coming Soon...</div> <div id="accorObj"></div> </div></div></div>'+
-                '</div></div>'  ;
+var text = '<div class="bs-example sidebarone" style="width:450px; height:768px;">' +
+                '<div class="row" style="border-bottom: 1px solid #7E7F81;">' +
+                        '<div class="col-md-12">' +
+                            '<div >'+
+                                '<ul class="nav nav-tabs" role="tablist">'+
+                                    '<li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab"><i class="fa fa-binoculars"></i></a></li>'+
+                                    '<li role="presentation" ><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab"><i class="fa fa-cogs"></i></a></li>'+
+                                '</ul>' +
+                                '<button type="button" class="close" onclick="closeAccordion()" style="margin-top:-43px">×</button>'+
+                            '</div>'+
+                        '</div>' +
+                '</div>' +
+                '<div class="tab-content">'+
+                    '<div role="tabpanel" class="tab-pane active" id="tab1">' +
+                        '<div class="panel-group" id="accordion-right-menu"> <div class="panel panel-default"> <div class="panel-heading"> <h4 class="panel-title">'+
 
+                        '<a  href="#collapseOne" aria-expanded="true" style="pointer-events: none"><i class="glyphicon glyphicon-map-marker"></i>Clustered <span aria-hidden="true"></span></a> </h4> </div> <div id="collapseOne" class="panel-collapse" style="background:#406a9e; color:#fff">'+
+                        '<div class="panel-body" align="left"><div id="gmarkers" align="left">First Tab Information</div> </div> </div> </div>'+
+                        '<div class="panel panel-default"> <div class="panel-heading"> <h4 class="panel-title"> '+
+                        '<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-right-menu"  href="#collapseTwo"><i class="glyphicon glyphicon-tags"></i>Category</a> </h4> </div> <div id="collapseTwo" class="panel-collapse collapse">'+
+                        '<ul class="sublist"><li><input type="checkbox"> All Categories</li><li><input type="checkbox"> Business</li><li><input type="checkbox"> Hobbies</li><li><input type="checkbox"> Other</li><li><input type="checkbox"> Music</li><li><input type="checkbox"> Travel &amp; Outdoor </li><li><input type="checkbox"> Science & Tech</li><li><input type="checkbox"> Auto, Boat & Air</li><li><input type="checkbox"> Food & Drink</li><li><input type="checkbox"> Film & Media</li><li><input type="checkbox"> Arts</li><li><input type="checkbox"> Sports & Fitness</li><li><input type="checkbox"> Health</li><li><input type="checkbox"> Community</li><li><input type="checkbox"> Charity &amp; Causes</li><li><input type="checkbox"> Fashion</li><li><input type="checkbox"> Family &amp; Education</li><li><input type="checkbox"> Government</li><li><input type="checkbox"> Holiday</li><li><input type="checkbox"> Spirituality</li><li><input type="checkbox"> Home &amp; Lifestyle</li></ul> </div></div>'+
+                        '<div class="panel panel-default"><div class="panel-heading"> <h4 class="panel-title"> <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-right-menu"  href="#collapseThree"><i class="glyphicon glyphicon-calendar"></i>Event Type</a>'+
+                        '</h4> </div> <div id="collapseThree" class="panel-collapse collapse"> <div class="panel-body"> <div id="gmarkers"> <input type="checkbox"> All Event Types</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Class</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Tour</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Performance</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Networking</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Retreat</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Conference</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Seminar</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Party</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Gala</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Game</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Other</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Festival</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Expo</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Race</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Screening</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Attraction</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Convention</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Tournament</div></div><div class="panel-body"> <div id="gmarkers"><input type="checkbox"> Appearance</div></div>    </div> </div>'+
+                        '<div class="panel panel-default"> <div class="panel-heading"> <h4 class="panel-title"> '+
+                        '<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-right-menu"  href="#collapseFour"><i class="glyphicon glyphicon-time"></i>Time</a> </h4> </div> <div id="collapseFour" class="panel-collapse collapse">'+
+                        '<div class="panel-body"><div id="gmarkers" >Coming Soon...</div> <div id="accorObj"></div> </div></div></div>'+
+                        '</div>' +
+                    '</div>'+
+                    '<div role="tabpanel" class="tab-pane" id="tab2">' +
+                        '<div id="accordion" role="tablist" aria-multiselectable="true" class="panel-group">'+
+                    '<div class="panel panel-default">'+
+                    '<div id="cat-1" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
+                    '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-1" aria-expanded="false" aria-controls="cat-c-1" class="collapsed"><i class="fa fa-cutlery"></i> Eat and Drink</a><i class="fa fa-plus" style="float:right"></i></h4>'+
+                    '</div>'+
+                    '<div id="cat-c-1" role="tabpanel" aria-labelledby="cat-1" class="panel-collapse collapse">'+
+                    '<ul class="list-group">'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-check-square-o"></i> select all <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-cutlery"></i> Restaurant <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-cutlery"></i> Snacks/Fast food <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-glass"></i> Bar/Pub <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-coffee"></i> Coffee/Tea <input type="checkbox" style="float:right"></li>'+
+
+                    '</ul>'+
+                    '</div>'+
+                    '<div id="cat-2" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
+                    '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-2" aria-expanded="false" aria-controls="cat-c-2" class="collapsed"><i class="fa fa-shopping-cart"></i> Shopping</a><i class="fa fa-plus" style="float:right"></i></h4>'+
+                    '</div>'+
+                    '<div id="cat-c-2" role="tabpanel" aria-labelledby="cat-2" class="panel-collapse collapse">'+
+                    '<ul class="list-group">'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-check-square-o"></i> select all <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-shopping-cart"></i> 24-7/Convenience Store <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-shopping-cart"></i> Shopping Center <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-shopping-cart"></i> Department Store <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-shopping-cart"></i> Food & Drink <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-shopping-cart"></i> Book Shop <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-shopping-cart"></i> Pharmacy <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-shopping-cart"></i> Electronics <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-shopping-cart"></i> DIY/garden center <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-shopping-cart"></i> Clothing & Accessories <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-shopping-cart"></i> Outdoor Sports <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-shopping-cart"></i> Store <input type="checkbox" style="float:right"></li>'+
+
+                    '</ul>'+
+                    '</div>'+
+                    '<div id="cat-3" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
+                    '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-3" aria-expanded="false" aria-controls="cat-c-3" class="collapsed"><i class="fa fa-coffee"></i> Going out</a><i class="fa fa-plus" style="float:right"></i></h4>'+
+                    '</div>'+
+                    '<div id="cat-c-3" role="tabpanel" aria-labelledby="cat-3" class="panel-collapse collapse">'+
+                    '<ul class="list-group">'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-check-square-o"></i> select all <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-music"></i> Dance or Nightclub <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-video-camera"></i> Cinema <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-music"></i> Theater, Music & Culture <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-star"></i> Casino <input type="checkbox" style="float:right"></li>'+
+
+                    '</ul>'+
+                    '</div>'+
+                    '<div id="cat-4" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
+                    '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-4" aria-expanded="false" aria-controls="cat-c-4" class="collapsed"><i class="fa fa-bed"></i> Accommodation</a><i class="fa fa-plus" style="float:right"></i></h4>'+
+                    '</div>'+
+                    '<div id="cat-c-4" role="tabpanel" aria-labelledby="cat-4" class="panel-collapse collapse">'+
+                    '<ul class="list-group">'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-check-square-o"></i> select all <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-bed"></i> Hotel <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-bed"></i> Motel <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-bed"></i> Hostel <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-bed"></i> Camping <input type="checkbox" style="float:right"></li>'+
+
+                    '</ul>'+
+                    '</div>'+
+                    '<div id="cat-5" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
+                    '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-5" aria-expanded="false" aria-controls="cat-c-5" class="collapsed"><i class="fa fa-camera-retro"></i> Sights and Museums</a><i class="fa fa-plus" style="float:right"></i></h4>'+
+                    '</div>'+
+                    '<div id="cat-c-5" role="tabpanel" aria-labelledby="cat-5" class="panel-collapse collapse">'+
+                    '<ul class="list-group">'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-check-square-o"></i> select all <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-camera-retro"></i> Landmark/Attraction <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-camera-retro"></i> Museum <input type="checkbox" style="float:right"></li>'+
+
+                    '</ul>'+
+                    '</div>'+
+                    '<div id="cat-6" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
+                    '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-6" aria-expanded="false" aria-controls="cat-c-6" class="collapsed"><i class="fa fa-taxi"></i> Transport</a><i class="fa fa-plus" style="float:right"></i></h4>'+
+                    '</div>'+
+                    '<div id="cat-c-6" role="tabpanel" aria-labelledby="cat-6" class="panel-collapse collapse">'+
+                    '<ul class="list-group">'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-check-square-o"></i> select all <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-plane"></i> Airport <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-train"></i> Railway Station <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-subway"></i> Public Transit <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-ship"></i> Ferry Terminal <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-taxi"></i> Taxi Stand <input type="checkbox" style="float:right"></li>'+
+
+                    '</ul>'+
+                    '</div>'+
+                    '<div id="cat-7" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
+                    '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-7" aria-expanded="false" aria-controls="cat-c-7" class="collapsed"><i class="fa fa-building"></i> Business and Services</a><i class="fa fa-plus" style="float:right"></i></h4>'+
+                    '</div>'+
+                    '<div id="cat-c-7" role="tabpanel" aria-labelledby="cat-7" class="panel-collapse collapse">'+
+                    '<ul class="list-group">'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-check-square-o"></i> select all <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-building"></i> ATM/Bank/Exchange <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-building"></i> Police/Emergency <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-building"></i> Post Office <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-building"></i> Tourist Information <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-building"></i> Gasoline Station <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-building"></i> Car Rental <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-building"></i> Car Dealer/Repair <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-building"></i> Travel Agency <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-building"></i> Communications/Media <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-building"></i> Business/Industry <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-building"></i> Service <input type="checkbox" style="float:right"></li>'+
+
+                    '</ul>'+
+                    '</div>'+
+                    '<div id="cat-8" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
+                    '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-8" aria-expanded="false" aria-controls="cat-c-8" class="collapsed"><i class="fa fa-hospital-o"></i> Facilities</a><i class="fa fa-plus" style="float:right"></i></h4>'+
+                    '</div>'+
+                    '<div id="cat-c-8" role="tabpanel" aria-labelledby="cat-8" class="panel-collapse collapse">'+
+                    '<ul class="list-group">'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-check-square-o"></i> select all <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-hospital-o"></i> Hospital or Healthcare Facility <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-building"></i> Government or Community Facility <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-pencil"></i> Educational Facility <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-book"></i> Library <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-building"></i> Expo & Convention Facility <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-car"></i> Parking Facility <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-building"></i> Public Bathroom/Rest Area <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-soccer-ball-o"></i> Sport Facility/Venue <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-building"></i> Facility <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-building"></i> Religious Place <input type="checkbox" style="float:right"></li>'+
+
+                    '</ul>'+
+                    '</div>'+
+                    '<div id="cat-9" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
+                    '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-9" aria-expanded="false" aria-controls="cat-c-9" class="collapsed"><i class="fa fa-umbrella"></i> Leisure & Outdoor</a><i class="fa fa-plus" style="float:right"></i></h4>'+
+                    '</div>'+
+                    '<div id="cat-c-9" role="tabpanel" aria-labelledby="cat-9" class="panel-collapse collapse">'+
+                    '<ul class="list-group">'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-check-square-o"></i> select all <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-umbrella"></i> Recreation <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-umbrella"></i> Theme Park <input type="checkbox" style="float:right"></li>'+
+
+                    '</ul>'+
+                    '</div>'+
+                    '<div id="cat-10" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
+                    '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-10" aria-expanded="false" aria-controls="cat-c-10" class="collapsed"><i class="fa fa-leaf"></i> Natural or Geographical</a><i class="fa fa-plus" style="float:right"></i></h4>'+
+                    '</div>'+
+                    '<div id="cat-c-10" role="tabpanel" aria-labelledby="cat-10" class="panel-collapse collapse">'+
+                    '<ul class="list-group">'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-check-square-o"></i> select all <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-leaf"></i> Recreation <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-leaf"></i> Body of Water <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-leaf"></i> Mountain or Hill <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-leaf"></i> Underwater Feature <input type="checkbox" style="float:right"></li>'+
+                    '<li class="list-group-item accordion-cell"><i class="fa fa-leaf"></i> Forest, Heath <input type="checkbox" style="float:right"></li>'+
+
+                    '</ul>'+
+                    '</div>'+
+                    '</div>'+
+                    '</div>' +
+                    '</div>'+
+                '</div>'+
+                '</div>'  ;
 
   controlText.innerHTML = text
   // accordionUI.innerHTML = text;
@@ -123,6 +300,17 @@ var text = '<div class="bs-example sidebarone" style="width:450px; height:768px;
   });
 }
 // Add a Home control that returns the user to London
+function attachEvents(){
+    $('.panel-title').click(function(){
+        if($(this).children('a').attr('class') == 'collapsed'){
+            $(this).children('i').removeClass('fa-plus');
+            $(this).children('i').addClass('fa-minus');
+        }else{
+            $(this).children('i').addClass('fa-plus');
+            $(this).children('i').removeClass('fa-minus');
+        }
+    });
+}
 function HomeControl(controlDiv, map) {
   controlDiv.style.padding = '5px';
   var controlUI = document.createElement('div');
@@ -136,7 +324,7 @@ function HomeControl(controlDiv, map) {
   controlDiv.appendChild(controlUI);
   var controlText = document.createElement('div');
   
-  controlText.innerHTML = '<a href="#" role="button" class="btn" data-toggle="modal" ><span class="glyphicon glyphicon-th-list"></span> MENU</a>';
+  controlText.innerHTML = '<a href="#" role="button" class="btn" onclick="attachEvents()" data-toggle="modal"><span class="glyphicon glyphicon-th-list"></span> MENU</a>';
   controlUI.appendChild(controlText);
 
   google.maps.event.addDomListener(controlUI, 'click', function() {
@@ -158,7 +346,7 @@ function LocationControl(controlDiv) {
   controlDiv.appendChild(controlUI);
   var controlText = document.createElement('div');
   
-  controlText.innerHTML = '<a href="#" role="button" class="ltn" ><img src="../imgs/gps.png" width="15px" height="auto"></a>';
+  controlText.innerHTML = '<a href="#" role="button" class="ltn" ><img src="../images/gps.png" width="15px" height="auto"></a>';
   controlUI.appendChild(controlText);
 
   google.maps.event.addDomListener(controlUI, 'click', function() {
@@ -256,12 +444,13 @@ function accorDisplay(objects) {
         $('#gmarkers').html(Names);
 */
 
+console.log('Sending Objects'+objects);
 	$.ajax({
       type: 'POST',
       url: '/snapmap/location',
       data: {
-          markObj: objects
-            },
+          markObj: JSON.stringify(objects)
+	},
         dataType: 'JSON'
     }).done(function (response){
             // console.log(response);
@@ -274,7 +463,7 @@ function accorDisplay(objects) {
           }
           var Names='<ul>'
           for(var i=0; i<records.length; i++)
-             Names=Names+'<li><a href="#" onclick="accorInfoDisplay(\''+i+'\')">'+records[i].Name+'</a></li>'
+             Names=Names+'<li><a href="#" style="color:#ffffff;" onclick="accorInfoDisplay(\''+i+'\')">'+records[i].Name+'</a></li>'
           Names = Names+'</ul>';
           console.log(Names);
           $('#accorObj').val(JSON.stringify(records))
@@ -286,6 +475,7 @@ function accorDisplay(objects) {
 
 
 var map='';
+var mapSatellite='';
 var currPosition='';
 var infwindow='';
 var infowindow
@@ -304,16 +494,32 @@ function initialize() {
         style: google.maps.ZoomControlStyle.SMALL,
         position: google.maps.ControlPosition.RIGHT_BOTTOM
     },
-    mapTypeControlOptions: {
-        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-        position: google.maps.ControlPosition.LEFT_BOTTOM
-    },
+    mapTypeControl: false,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+
     disableDoubleClickZoom: true
   };
+  var mapSatelliteOptions = {
+    zoom:1,
+    center:pos,
+    mapTypeId: google.maps.MapTypeId.SATELLITE
+  }
+
    
    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-   if(!mobile)
+   var divMapSatellite = document.getElementById('map-satellite');
+   map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(divMapSatellite);
+   mapSatellite = new google.maps.Map(document.getElementById('map-satellite'), mapSatelliteOptions);
+   if(!mobile) {
     map.setZoom(2);
+    mapSatellite.setZoom(2);
+   }
+    google.maps.event.addListener(map, 'zoom_changed', zoomChange);    
+    google.maps.event.addListener(map, 'idle', placeChange);
+
+    google.maps.event.addListener(mapSatellite, 'zoom_changed', zoomChange_S);    
+    google.maps.event.addListener(mapSatellite, 'idle', placeChange_S);        
+
     google.maps.event.addListener(map, 'dblclick', function(e) {
    placeMarker(e.latLng, map);
    });
@@ -472,6 +678,8 @@ function addSearchButton(map) {
       }
     });
     map.fitBounds(bounds);
+    mapSatellite.fitBounds(bounds);
+    mapSatellite.setZoom(map.getZoom());
   });
 
 }
@@ -786,6 +994,33 @@ function setMarkers(branches, map) {
 	var markerCluster = new MarkerClusterer(map, markers);
    // map.fitBounds(bounds);
 }
+
+function zoomChange() {
+  // console.log(map.getZoom())
+  
+  placeChange();
+}
+
+function placeChange() {
+    
+  mapSatellite.setCenter(map.getCenter());
+  if(map.getZoom()>7)
+    mapSatellite.setZoom(map.getZoom()-4)
+  else if(map.getZoom()>4)
+    mapSatellite.setZoom(map.getZoom()-3)
+  else
+    mapSatellite.fitBounds(map.getBounds());  
+  
+}
+
+function zoomChange_S(){
+//No implementation required, but skeleton required    
+}
+
+function placeChange_S() {
+  console.log('Place Changing:: '+mapSatellite.getCenter());
+  map.setCenter(mapSatellite.getCenter())
+ }
 
 google.maps.event.addDomListener(window, 'load', initialize);
 

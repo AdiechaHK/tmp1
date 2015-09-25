@@ -247,12 +247,12 @@ $(document).ready(function(){
         '<div class="col-md-12 sub-menu-cell"><span class="col-md-12"><i class="fa fa-leaf"></i> Forest, Heath <input type="checkbox" style="float:right"></span></div>'+
         '</div>';
     var attachEvents = function(){
-        $('#pac-input').focusin(function(){
-            $('.menu').show(400);
+//        $('#pac-input').focusin(function(){
+  //          $('.menu').show(400);
         });
         $('#pac-input').focusout(function(){
-            $('.menu').hide(400);
-            $('.sub-menu-map').hide(400);
+    //        $('.menu').hide(400);
+      //      $('.sub-menu-map').hide(400);
         });
         $('.menu-cell').hover(function(){
             $('.sub-menu-map').html('');

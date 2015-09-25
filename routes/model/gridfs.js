@@ -2,7 +2,7 @@ mongoose = require('mongoose');
  
 var GridStore = mongoose.mongo.GridStore,
     Grid      = mongoose.mongo.Grid,
-    ObjectID  = mongoose.mongo.BSONPure.ObjectID;
+    ObjectID  = mongoose.mongo.ObjectID;
     
 exports.getGridFile = function(id, fn) {
     var db = mongoose.connection.db,

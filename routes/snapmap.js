@@ -89,24 +89,24 @@ var n = month[d.getMonth()];
 
 }
 
-
-var obj = function(imageId,sd,ed,title,info,id,lat,lon){
-	this.imageId = imageId;
-	this.startDate = sd;
-	this.endDate = ed;
-	this.title = title;
-	this.info = info;
-	this.id = id;
+var obj = function(imageId,dt,sd,ed,title,info,id,lat,lon){
+	this.ImageUrl = imageId;
+	this.date=dt;
+	this.StartDate = sd;
+	this.EndDate = ed;
+	this.Name = title;
+	this.Description = info;
+	this.id=id;
 	this.Latitude=lat;
 	this.Longitude=lon;
 }
-
 router.post('/location',function(req,res){
-	var marker = req.body.markObj;
+	var marker = JSON.parse(req.body.markObj);
 	console.log('Markers leng: ');
 	console.log(req.body.markObj)
 	var i=0;
-	var maxlen = req.body.markObj.length;
+	var maxlen = marker.length;
+	console.log('obj Length: '+maxlen);
 	var recordArray=[];
 
 	async.each(marker,function(pos,cb){
@@ -187,7 +187,7 @@ function formatDbData(doc,actRecords){
 			if(doc[i].EndDate==null)
 				doc[i].EndDate = doc[i].StartDate+21600000;
 			if(doc[i].ImageUrl==null)
-				doc[i].ImageUrl = 'https://wishpool.one/imgs/SNAP2.png';
+				doc[i].ImageUrl = 'https://wishpool.one/images/SNAP2.png';
 			else if(doc[i].ImageUrl.indexOf("http:")!=-1)
 				doc[i].ImageUrl = doc[i].ImageUrl.replace("http:", "")
 			if(doc[i].Description==null)
@@ -219,7 +219,7 @@ router.get('/location/:lat/:lng',function(req,res){
 						if(doc[i].EndDate==null)
 							doc[i].EndDate = doc[i].StartDate+21600000;
 						if(doc[i].ImageUrl==null)
-							doc[i].ImageUrl = 'http://wishpool.one/imgs/SNAP2.png';
+							doc[i].ImageUrl = 'http://wishpool.one/images/SNAP2.png';
 						if(doc[i].Description==null)
 							doc[i].Description='No Description available';
 							actRecords.push(new obj(doc[i].ImageUrl,getDate(new Date()),getDate(doc[i].StartDate),getDate(doc[i].EndDate),doc[i].Name,doc[i].Description,doc[i]._id,doc[i].Latitude,doc[i].Longitude))				
@@ -236,7 +236,7 @@ router.get('/location/:lat/:lng',function(req,res){
 							if(doc[i].EndDate==null)
 								doc[i].EndDate = doc[i].StartDate+21600000;
 							if(doc[i].ImageUrl==null)
-								doc[i].ImageUrl = 'http://wishpool.one/imgs/SNAP2.png';
+								doc[i].ImageUrl = 'http://wishpool.one/images/SNAP2.png';
 							if(doc[i].Description==null)
 								doc[i].Description='No Description available';
 								actRecords.push(new obj(doc[i].ImageUrl,getDate(new Date()),getDate(doc[i].StartDate),getDate(doc[i].EndDate),doc[i].Name,doc[i].Description,doc[i]._id,doc[i].Latitude,doc[i].Longitude))				
@@ -253,7 +253,7 @@ router.get('/location/:lat/:lng',function(req,res){
 							if(doc[i].EndDate==null)
 								doc[i].EndDate = doc[i].StartDate+21600000;
 							if(doc[i].ImageUrl==null)
-								doc[i].ImageUrl = 'http://wishpool.one/imgs/SNAP2.png';
+								doc[i].ImageUrl = 'http://wishpool.one/images/SNAP2.png';
 							if(doc[i].Description==null)
 								doc[i].Description='No Description available';
 								actRecords.push(new obj(doc[i].ImageUrl,getDate(new Date()),getDate(doc[i].StartDate),getDate(doc[i].EndDate),doc[i].Name,doc[i].Description,doc[i]._id,doc[i].Latitude,doc[i].Longitude))				

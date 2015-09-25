@@ -8,7 +8,7 @@ var uploadSchema = mongoose.Schema(
         {
             _id : Schema.Types.ObjectId,
             docName: 'string',
-            files: [ mongoose.Schema.Mixed ]
+            files: [ Schema.Types.Mixed ]
         }
 );
 

@@ -8,7 +8,7 @@ html
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-    title Info windows
+    title Snapmap
     |     
     style.
       html, body, #map-canvas {
@@ -66,7 +66,7 @@ html
         }
         div.sidebarone{ background: #071d32 !important;padding: 20px 0;width: 260px!important;text-align: left; top:0 !important; margin-left: -1px;}
         div.sidebarone .panel-group .panel {margin-bottom: 10px;}.panel-group{ margin-top: 5px !important;}
-        div.sidebarone .panel-default > .panel-heading {font-family: roboto; background-color: #071d32;color: #7e7f81; text-decoration: none !important; padding:10px 30px !important;}
+        div.sidebarone .panel-default > .panel-heading {font-family: roboto; background-color: #071d32;color: #7e7f81; text-decoration: none !important; padding:10px 30px;}
         div.sidebarone .panel{border: 0 none !important; box-shadow:none;}
         div.sidebarone .collapse.in {background-color: #406a9e;color: #e6e6e7;}
         div.sidebarone .collapse.in:focus, .collapse.in:hover{ background:#406a9e !important;}
@@ -132,7 +132,7 @@ html
         #map-satellite {
             width:80px;
             height:80px;
-	    margin:0px;
+            margin:0px;
             margin-bottom:-30px;
             border:thin solid;
             border-color:white;
@@ -163,7 +163,7 @@ html
           padding: 5px 11px 0px 11px;
         }
 
-        #type-selector lgbel {
+        #type-selector label {
           font-family: Roboto;
           font-size: 13px;
           font-weight: 300;
@@ -178,23 +178,20 @@ html
             z-index: 9999;
             width:75%
         }
-        #accordion{
+
+        #accordion {
             background-color: #3A4352;
-            margin-left: 40px;
             margin-top: 0px;
-            position: absolute;
-            width: 280px;
-            z-index: 9999;
-            -webkit-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
-            -moz-box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
-            box-shadow: 2px 3px 13px 0px rgba(92, 92, 92, 1);
+
         }
         .accordion-cell{
             background-color: #0a69a1;
+            padding: 8px 10px;
             color: white;
         }
         .accordion-cell:hover{
             background-color: #076091;
+            padding: 8px 10px;
             cursor: pointer;
             color: white;
         }
@@ -228,6 +225,10 @@ html
             cursor: pointer;
             color: white;
         }
+        .accordion-panel{
+            padding: 8px 10px !important;
+        }
+
         .menu-cell span{
             font-size: 21px;
             padding: 5px;
@@ -269,39 +270,56 @@ html
             position: relative;
             display: block;
             padding: 10px 15px;
+            margin-top:5px;
         }
 
         .nav-tabs > li.active > a{
-            color: #555;
+            color: #6B93C4;
             cursor: default;
              background-color: transparent;
              border: none;
              border-bottom-color: transparent;
         }.nav-tabs > li > a{
-            color: #ffffff;
+            color: #aabbbb;
             cursor: default;
              background-color: transparent;
              border: none;
              border-bottom-color: transparent;
+            font-size: 24px;
         }
 
         .nav-tabs > li > a:hover {
+            color: #ccbbaa;
             border-color: transparent;
             background-color: transparent;
         }.nav-tabs > li.active > a:hover {
+            color: #6B93C4;
             border-color: transparent;
             background-color: transparent;
         }
         .nav-tabs > li.active > a:focus {
+            color: #6B93C4;
             border-color: transparent;
             background-color: transparent;
         }
         .nav-tabs > li.active > a:active {
+            color: #6B93C4;;
             border-color: transparent;
             background-color: transparent;
         }
 
+        .nav-tabs > li > .tab2-img > img {
+          src:"../images/add_favourite-blue.png";
+          border-color: transparent;
+          background-color: transparent;
+        }.nav-tabs > li > .tab2-img > img :hover{
+          background-image: url("../images/add_favourite-blue.png");
+          border-color: transparent;
+          background-color: transparent;
+        }
         .nav-tabs {
+            margin-top: -16px;
+            margin-left: 2px;
              border-bottom: none;
             padding: 0px 15px;
         }
@@ -310,46 +328,46 @@ html
             border: none;
             border-bottom-color: transparent;
         }
-        
+        .sidebarone{
+            overflow-y: scroll;
+        }
+
     |     
     script.
      var mapInfo = !{JSON.stringify(mapData)}
     
-    script(src='../lib/angular.min.js')
-    script(src='../lib/ui-bootstrap-tpls-0.13.1.min.js')
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"" ></script>
     script(src='../lib/markerclusterer.js')
     | &#x9;
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    script(src='../lib/maps.js')
+    script(src='../javascripts/snapmap.js')
+    script(src='../javascripts/submenu.js')
   body
     .controls(id='pac-in')
       div(class='input-group' id='button-search')
         a.input-group-btn.btn.btn-default(href="#" role="button" style='width:18px; height:20px; margin:0px;padding:0px;' onclick='toggleInput()')
-          img(src='../imgs/search.jpg' width='32px')
+          img(src='../images/search.jpg' width='32px')
           //button.btn.btn-default(type='button' style='margin:0px; padding:0px;' onclick='toggleInput()')
             
         div(class='input-group' id='search-group')
           a.input-group-btn.btn.btn-default.go.inline(href="#" style='position:relative; margin:0px' role="button" onclick='directionGroup()')
-            img(src='../imgs/directions.png' width='18px'  )
-          a.input-group-btn.btn.btn-default.add_fav.inline(href="#" style='position:relative; margin:0px' role="button")
-            img(src='../imgs/add_favourite.png' width='18px'  )
+            img(src='../images/directions.png' width='18px'  )
           input.form-control(id='pac-input' type='text' style='margin:0px;' placeholder='Search Box...')
 
         div(id='direction-group')
           a.input-group-btn.btn.btn-default(href="#" role="button" )
-            img(src='../imgs/directions.png' width='18px')
+            img(src='../images/directions.png' width='18px')
           a.input-group-btn.btn.btn-default(href="#" role="button"  onclick='directionInfo(\'WALKING\')')
-            img(src='../imgs/walking.png' width='18px')
+            img(src='../images/walking.png' width='18px')
           a.input-group-btn.btn.btn-default(href="#" role="button" onclick='directionInfo(\'BICYCLING\')')
-            img(src='../imgs/cycling.jpg' width='18px')
+            img(src='../images/cycling.jpg' width='18px')
           a.input-group-btn.btn.btn-default(href="#" role="button" onclick='directionInfo(\'TRANSIT\')')
-            img(src='../imgs/transit.png' width='18px')
+            img(src='../images/transit.png' width='18px')
           a.input-group-btn.btn.btn-default(href="#" role="button" onclick='directionInfo(\'DRIVING\')')
-            img(src='../imgs/driving.jpg' width='18px')
+            img(src='../images/driving.jpg' width='18px')
           a.input-group-btn.btn.btn-default(href="#" role="button" onclick='searchGroup()')
-            img(src='../imgs/close.png' width='18px')
+            img(src='../images/close.png' width='18px')
 
       div(id='startend-group')
           input.form-control(id='start-input' type='text' style='margin:0px; border:0px' placeholder='Choose Starting point')
@@ -391,4 +409,4 @@ html
           mapSatellite.setMapTypeId(google.maps.MapTypeId.SATELLITE);
         }
       }
-   script(src='../javascripts/map.js')
+
