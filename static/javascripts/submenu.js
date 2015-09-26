@@ -3,7 +3,7 @@ $(document).ready(function(){
     var menuAccordion = '<div id="accordion" role="tablist" aria-multiselectable="true" class="panel-group">'+
     '<div class="panel panel-default">'+
     '<div id="cat-1" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
-    '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-1" aria-expanded="false" aria-controls="cat-c-1" class="collapsed"><i class="fa fa-cutlery"></i> Eat and Drink</a><input type="checkbox" style="float:right"/></h4>'+
+    '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-1" aria-expanded="false" aria-controls="cat-c-1" class="collapsed"><i class="fa fa-cutlery"></i> Community $ Lifestyle </a><input type="checkbox" style="float:right"/></h4>'+
     '</div>'+
     '<div id="cat-c-1" role="tabpanel" aria-labelledby="cat-1" class="panel-collapse collapse">'+
     '<ul class="list-group">'+
@@ -249,7 +249,7 @@ $(document).ready(function(){
     var attachEvents = function(){
 //        $('#pac-input').focusin(function(){
   //          $('.menu').show(400);
-        });
+        // });
         $('#pac-input').focusout(function(){
     //        $('.menu').hide(400);
       //      $('.sub-menu-map').hide(400);
