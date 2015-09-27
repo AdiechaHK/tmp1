@@ -1,6 +1,6 @@
-<?xml version="1.1" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8' ?>
 <categories>
-	<menu name="Community $ Lifestyle" icon="fa fa-users"> 
+	<menu name="Community/Lifestyle" icon="fa fa-users"> 
 		<sub name="Government Services" icon="fa fa-users"></sub>
 		<sub name="Family" icon="fa fa-users"></sub>
 		<sub name="Kids" icon="fa fa-child"></sub>
@@ -20,23 +20,24 @@
 		<sub name="Coffee/Tea" icon="fa fa-coffee"></sub>
 		<sub name="Other" icon=""></sub>
 	</menu>
-	<menu name="Shopping" icon=""> 
+	<menu name="Market Place" icon=""> 
 		<sub name="Flea Markets" icon=""></sub>
 		<sub name="Christmas Market" icon=""></sub>
+		<sub name="Farmers Market" icon=""></sub>
 		<sub name="DIY/Garden center" icon=""></sub>
-		<sub name="Other" icon=""></sub>
+		<sub name="Other Marketplaces" icon=""></sub>
 	</menu>
-	<menu name="Social Going Out" icon=""> 
-		<sub name="Dance or Nightclub" icon="fa fa-music"></sub>
+	<menu name="Going Out" icon=""> 
+		<sub name="Dance/Nightclub" icon="fa fa-music"></sub>
 		<sub name="Cinema" icon="fa fa-video-camera"></sub>
-		<sub name="Theater and Perfomance, Comedy" icon="fa fa-video-camera"></sub>
+		<sub name="Theater/Perfomance/Comedy" icon="fa fa-video-camera"></sub>
 		<sub name="Art, Craft and Gallaries" icon="fa fa-camera-retro"></sub>
-		<sub name="casino" icon="fa fa-money"></sub>
+		<sub name="Casino" icon="fa fa-money"></sub>
 		<sub name="Other" icon="fa fa-camera-retro"></sub>
 	</menu>
-	<menu name="Housing spaces" icon="fa fa-home"> 
+	<menu name="Social Housing" icon="fa fa-home"> 
 		<sub name="Couch Surfing" icon="fa fa-bed"></sub>
-		<sub name="Camping sites" icon="fa fa-bed"></sub>
+		<sub name="Camping Sites" icon="fa fa-bed"></sub>
 		<sub name="Coliving" icon="fa fa-home"></sub>
 		<sub name="Co-housing" icon="fa fa-bed"></sub>
 		<sub name="Collaborative workspace" icon="fa fa-home"></sub>
@@ -46,13 +47,13 @@
 		<sub name="Physical Storage Marketplace" icon="fa fa-home"></sub>
 		<sub name="Hostel" icon="fa fa-bed"></sub>
 		<sub name="Community Facility" icon="fa fa-home"></sub>
-		<sub name="Expo and Convention Facility" icon="fa fa-university"></sub>
+		<sub name="Expo/Convention Facility" icon="fa fa-university"></sub>
 		<sub name="Education/library " icon="fa fa-graduation-cap"></sub>
 		<sub name="Sport Facility/Venue" icon="fa fa-university"></sub>
 		<sub name="Spiritual/ Religious Place" icon="fa fa-university"></sub>
-		<sub name="Other special places" icon="fa fa-university"></sub>
+		<sub name="Other Special places" icon="fa fa-university"></sub>
 	</menu>
-	<menu name="Transportation spaces" icon="fa fa-bicycle"> 
+	<menu name="Eco-Transportation" icon="fa fa-bicycle"> 
 		<sub name="Bike sharing system" icon="fa fa-bicycle"></sub>
 		<sub name="Carpool/Ride sharing" icon="fa fa-car"></sub>
 		<sub name="Carsharing" icon="fa fa-car"></sub>
@@ -62,14 +63,14 @@
 		<sub name="Transfer Cars" icon="fa fa-truck"></sub>
 		<sub name="Others" icon=""></sub>
 	</menu>
-	<menu name="Communal Financial spaces" icon="fa fa-money"> 
+	<menu name="Social Finance" icon="fa fa-money"> 
 		<sub name="Crowd funding" icon="fa fa-money"></sub>
 		<sub name="Peer-to-peer lending" icon="fa fa-money"></sub>
 		<sub name="Virtual currency" icon="fa fa-btc"></sub>
 		<sub name="Collaborative finance" icon="fa fa-money"></sub>
 		<sub name="Others" icon=""></sub>
 	</menu>
-	<menu name="Property sharing spaces" icon=""> 
+	<menu name="Property sharing" icon=""> 
 		<sub name="Bartering" icon="fa fa-archive"></sub>
 		<sub name="Book swapping" icon="fa fa-book"></sub>
 		<sub name="Clothes swapping" icon="fa fa-archive"></sub>
@@ -82,31 +83,31 @@
 		<sub name="Donate Electronics" icon="fa fa-trash"></sub>
 		<sub name="Other Donations" icon="fa fa-trash"></sub>
 	</menu>
-	<menu name="Gardens/Agriculture spaces" icon="fa fa-leaf"> 
+	<menu name="Community Gardening" icon="fa fa-leaf"> 
 		<sub name="Garden sharing" icon="fa fa-leaf"></sub>
 		<sub name="Seed swap" icon="fa fa-leaf"></sub>
 	</menu>
-	<menu name="Communal Fitness" icon="fa fa-users"> 
-		<sub name="Health and Fitness" icon="fa fa-users"></sub>
+	<menu name="Group Fitness" icon="fa fa-users"> 
+		<sub name="Health &amp; Fitness" icon="fa fa-users"></sub>
 		<sub name="Group sports" icon="fa fa-users"></sub>
-		<sub name="Music and Dance" icon="fa fa-music"></sub>
-		<sub name="Art and Theater" icon="fa fa-users"></sub>
-		<sub name="Lesure and Outdoors" icon="fa fa-users"></sub>
+		<sub name="Music &amp; Dance" icon="fa fa-music"></sub>
+		<sub name="Art &amp; Theater" icon="fa fa-users"></sub>
+		<sub name="Lesure &amp; Outdoors" icon="fa fa-users"></sub>
 		<sub name="Others" icon=""></sub>
 	</menu>
-	<menu name="Natural/Geographical spaces" icon="fa fa-tree"> 
+	<menu name="Natural/Geographical" icon="fa fa-tree"> 
 		<sub name="Recreation" icon="fa fa-tree"></sub>
 		<sub name="Theme Park" icon="fa fa-tree"></sub>
 		<sub name="Body of Water" icon="fa fa-ship"></sub>
 		<sub name="River Cruises" icon="fa fa-ship"></sub>
 		<sub name="Mountain or Hill" icon=""></sub>
 		<sub name="Underwater Feature" icon="fa fa-ship"></sub>
-		<sub name="Forest, Health or Other Vegetation" icon="fa fa-tree"></sub>
+		<sub name="Forest/Health/Other Vegetation" icon="fa fa-tree"></sub>
 		<sub name="Other Outdoor activities" icon="fa fa-tree"></sub>
-		<sub name="Travel and Outdoor Adventures" icon="fa fa-tree"></sub>
+		<sub name="Travel &amp; Outdoor Adventures" icon="fa fa-tree"></sub>
 		<sub name="Other" icon=""></sub>
 	</menu>
-	<menu name="Communal Tourism and Travel" icon="fa fa-camera-retro"> 
+	<menu name="Group Tourism &amp; Travel" icon="fa fa-camera-retro"> 
 		<sub name="Tourist Information" icon="fa fa-camera-retro"></sub>
 		<sub name="Attractions and Sights" icon="fa fa-camera-retro"></sub>
 		<sub name="Bicycle Tours" icon="fa fa-camera-retro"></sub>
@@ -114,7 +115,30 @@
 		<sub name="River Cruises" icon="fa fa-camera-retro"></sub>
 		<sub name="Landmark/Attraction" icon="fa fa-camera-retro"></sub>
 		<sub name="Museum" icon="fa fa-camera-retro"></sub>
-		<sub name="History and Culture" icon="fa fa-camera-retro"></sub>
+		<sub name="History &amp; Culture" icon="fa fa-camera-retro"></sub>
 		<sub name="Other Sights" icon="fa fa-camera-retro"></sub>
 	</menu>
+	
+	<layout name="LAYOUT-STYLES" caption="I like these Layout-styles:" icon="fa fa-thumbs-up">
+		<sub name="Classy"></sub>
+		<sub name="Business/Company"></sub>
+		<sub name="Scientific/Tech"></sub>
+		<sub name="Tour"></sub>
+		<sub name="(Stage) Performance "></sub>
+		<sub name="Networking"></sub>
+		<sub name="Retreat"></sub>
+		<sub name="Seminar"></sub>
+		<sub name="Meeting/Convention/ Conference//Exhibition "></sub>
+		<sub name="Festival"></sub>
+		<sub name="Party"></sub>
+		<sub name="Gala, fete, fair, Carnival"></sub>
+		<sub name="Games"></sub>
+		<sub name="Expo/Exhibition "></sub>
+		<sub name="Art of Screening"></sub>
+		<sub name="Attractions &amp; activities"></sub>
+		<sub name="Race, Tournament or Festivals"></sub>
+		<sub name="Appearance (on/off stage)"></sub>
+		<sub name="Holiday parties"></sub>
+		<sub name="Happy Hour"></sub>
+	</layout>
 </categories>

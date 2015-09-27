@@ -109,20 +109,34 @@ var menuItems ='';
  var menu = $.xml2json(xml).menu;
  for(var i=0; i<menu.length; i++) {
   menuItems = menuItems+ '<div id="cat-'+i+'" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
-               '<h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#cat-c-'+i+'" aria-expanded="false" aria-controls="cat-c-'+i+'" class="collapsed"><i class="'+menu[i].icon+'"></i>'+menu[i].name +'</a><i class="fa fa-plus" style="float:right"></i></h4>'+
+               '<h4 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#cat-c-'+i+'" aria-expanded="false" aria-controls="cat-c-'+i+'" class="collapsed"><i class="'+menu[i].icon+'"></i>&nbsp;&nbsp;'+menu[i].name +'</a></h4>'+
                '</div>'+
-               '<div id="cat-c-'+i+'" role="tabpanel" aria-labelledby="cat-'+i+'" class="panel-collapse collapse">'+
+               '<div id="cat-c-'+i+'" role="tabpanel" aria-labelledby="cat-'+i+'" class="panel-collapse collapse" style="height:30%; max-height:110px; overflow-y:auto;">'+
                '<ul class="list-group">'+
                '<li class="list-group-item accordion-cell"><i class="fa fa-check-square-o"></i> select all <input type="checkbox" style="float:right"></li>';
         for(var j=0; j<menu[i].sub.length; j++) {
-          menuItems = menuItems+'<li class="list-group-item accordion-cell"><i class="'+menu[i].sub[j].icon+'"></i> '+menu[i].sub[j].name+' <input type="checkbox" style="float:right"></li>'
+          menuItems = menuItems+'<li class="list-group-item accordion-cell"><i class="'+menu[i].sub[j].icon+'">&nbsp;&nbsp;</i> '+menu[i].sub[j].name+' <input type="checkbox" style="float:right"></li>'
           if(j+1 ===menu[i].sub.length)
             menuItems = menuItems+'</ul></div>';
         }
-         
  }
-                    
-var text = '<div class="bs-example sidebarone" style="width:450px; height:768px;">' +
+var _layout = $.xml2json(xml).layout;
+
+var layout ='<div id="layouts" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color:#ffffff;">'+
+               '<h4 class="panel-title"><a class="accordion-toggle collapsed " data-toggle="collapse" data-parent="#accordion" href="#layouts_c" aria-expanded="false" aria-controls="layouts_c" class="collapsed"><h3><i class="'+_layout.icon+'"></i>'+_layout.name +'</h3></a></h4><label>'+_layout.caption+'</label>'+
+               '</div>'+
+               '<div id="layouts_c" role="tabpanel" aria-labelledby="layouts" class="panel-collapse collapse" style="height:40%; max-height:200px; overflow-y:auto;">'+
+               '<ul class="list-group">'+
+               '<li class="list-group-item accordion-cell"><i class="fa fa-check-square-o"></i> select all <input type="checkbox" style="float:right"></li>';
+
+// var layout = '<div class="comment" style="margin:0px; color:#ffffff; text-align:left;"><h3 style="margin:0px;">'+_layout.name+'</h3><label>'+_layout.caption+'</label></div>';
+  for(var i=0; i<_layout.sub.length; i++) {
+          layout = layout+'<li class="list-group-item accordion-cell">'+_layout.sub[i].name+'<input type="checkbox" style="float:right">  </li>'
+          if(i+1 ===_layout.sub.length)
+            layout = layout+'</ul></div>';
+        }                  
+
+var text = '<div class="bs-example sidebarone" style="width:450px; height:700px;">' +
                 '<div class="row" style="border-bottom: 1px solid #7E7F81;">' +
                         '<div class="col-md-12">' +
                             '<div >'+
@@ -134,8 +148,8 @@ var text = '<div class="bs-example sidebarone" style="width:450px; height:768px;
                             '</div>'+
                         '</div>' +
                 '</div>' +
-                '<div style="margin-left:10px; margin-top:2px; color:#fff"><h3 >Categories</h3></div><hr style="margin:0px;">'+
-                '<div class="tab-content">'+
+                '<div class="panel-title" style="margin-left:10px; margin-top:2px; color:#fff"><h3 >CATEGORIES</h3></div><hr style="margin:0px;">'+
+                '<div class="tab-content" style="max-height:600px; overflow-y:auto;">'+
                     '<div role="tabpanel" class="tab-pane active" id="tab1">' +
                         '<div class="panel-group" id="accordion-right-menu"> <div class="panel panel-default"> <div class="panel-heading"> <h4 class="panel-title">'+
 
@@ -152,8 +166,8 @@ var text = '<div class="bs-example sidebarone" style="width:450px; height:768px;
                         '</div>' +
                     '</div>'+
                     '<div role="tabpanel" class="tab-pane" id="tab2">' +
-                        '<div id="accordion" role="tablist" aria-multiselectable="true" class="panel-group">'+
-                    '<div class="panel panel-default">'+menuItems+
+                        '<div id="accordion" role="tablist" aria-multiselectable="true" class="panel-group" >'+
+                    '<div class="panel panel-default" >'+menuItems+layout+
 
                     '</div>'+
                     '</div>' +
