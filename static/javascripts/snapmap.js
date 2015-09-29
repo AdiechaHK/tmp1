@@ -108,10 +108,10 @@ var menuItems ='';
   $.get('../javascripts/menu.xml', function(xml){
  var menu = $.xml2json(xml).menu;
  for(var i=0; i<menu.length; i++) {
-  menuItems = menuItems+ '<div id="cat-'+i+'" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
-               '<h4 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#cat-c-'+i+'" aria-expanded="false" aria-controls="cat-c-'+i+'" class="collapsed"><i class="'+menu[i].icon+'"></i>&nbsp;&nbsp;'+menu[i].name +'</a></h4>'+
+  menuItems = menuItems+ '<div id="cat'+i+'" role="tab" class="panel-heading accordion-panel" style="background-color: #071d32; color: white;">'+
+               '<h4 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#cat_c'+i+'" aria-expanded="false" aria-controls="cat_c'+i+'" class="collapsed"><i class="'+menu[i].icon+'"></i>&nbsp;&nbsp;'+menu[i].name +'</a></h4>'+
                '</div>'+
-               '<div id="cat-c-'+i+'" role="tabpanel" aria-labelledby="cat-'+i+'" class="panel-collapse collapse" style="height:30%; max-height:110px; overflow-y:auto;">'+
+               '<div id="cat_c'+i+'" role="tabpanel" aria-labelledby="cat'+i+'" class="panel-collapse collapse" style="height:30%; max-height:110px; overflow-y:auto;">'+
                '<ul class="list-group">'+
                '<li class="list-group-item accordion-cell"><i class="fa fa-check-square-o"></i> select all <input type="checkbox" style="float:right"></li>';
         for(var j=0; j<menu[i].sub.length; j++) {
@@ -136,7 +136,7 @@ var layout ='<div id="layouts" role="tab" class="panel-heading accordion-panel" 
             layout = layout+'</ul></div>';
         }                  
 
-var text = '<div class="bs-example sidebarone" style="width:450px; height:700px;">' +
+var text = '<div class="bs-example sidebarone" style="width:450px; height:100%; overflow-x:hidden;" onblur="closeAccordion()">' +
                 '<div class="row" style="border-bottom: 1px solid #7E7F81;">' +
                         '<div class="col-md-12">' +
                             '<div >'+
@@ -144,12 +144,11 @@ var text = '<div class="bs-example sidebarone" style="width:450px; height:700px;
                                     '<li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab"><i class="fa fa-binoculars"></i></a></li>'+
                                     '<li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab"><i class="fa fa-cogs"></i></a></li>'+
                                 '</ul>' +
-                                '<button type="button" class="close" onclick="closeAccordion()" style="margin-top:-43px">×</button>'+
                             '</div>'+
                         '</div>' +
                 '</div>' +
                 '<div class="panel-title" style="margin-left:10px; margin-top:2px; color:#fff"><h3 >CATEGORIES</h3></div><hr style="margin:0px;">'+
-                '<div class="tab-content" style="max-height:600px; overflow-y:auto;">'+
+                '<div class="tab-content" style="max-height:600px; overflow-y:auto; overflow-x:hidden;">'+
                     '<div role="tabpanel" class="tab-pane active" id="tab1">' +
                         '<div class="panel-group" id="accordion-right-menu"> <div class="panel panel-default"> <div class="panel-heading"> <h4 class="panel-title">'+
 
@@ -180,11 +179,12 @@ var text = '<div class="bs-example sidebarone" style="width:450px; height:700px;
     controlUI.appendChild(controlText);
   
 });
-  
   google.maps.event.addDomListener(controlUI, 'click', function() {
     // alert('hello world');
   });
 }
+
+
 // Add a Home control that returns the user to London
 function attachEvents(){
     $('.panel-title').click(function(){
@@ -209,8 +209,9 @@ function HomeControl(controlDiv, map) {
   
   controlDiv.appendChild(controlUI);
   var controlText = document.createElement('div');
-  
+  controlText.id='menu';
   controlText.innerHTML = '<a href="#" role="button" class="btn" onclick="attachEvents()" data-toggle="modal"><span class="glyphicon glyphicon-th-list"></span> MENU</a>';
+
   controlUI.appendChild(controlText);
 
   google.maps.event.addDomListener(controlUI, 'click', function() {
@@ -260,7 +261,7 @@ function UploadControl(controlDiv) {
     //$('#accor').toggle();
     var endDate = new Date().getTime()+3600000
     var mapObj = {Latitude:currPosition.lat, Longitude:currPosition.lng, Name:'Hello', Description:'Welcome to SnapMap', ImageUrl:'https://wishpool.one/imgs/SNAP2.png', StartDate: new Date(), EndDate:endDate }
-
+    $('#accor').hide();
     infowindow = new google.maps.InfoWindow();
     // console.log(currPosition);
     infowindow.setPosition(currPosition);
@@ -405,7 +406,12 @@ function initialize() {
 
     google.maps.event.addListener(mapSatellite, 'zoom_changed', zoomChange_S);    
     google.maps.event.addListener(mapSatellite, 'idle', placeChange_S);        
-
+    google.maps.event.addListener(map, 'click', function(e) { 
+      $('#accor').hide();
+    });
+    google.maps.event.addListener(mapSatellite, 'click', function(e) { 
+      $('#accor').hide();
+    });
     google.maps.event.addListener(map, 'dblclick', function(e) {
    placeMarker(e.latLng, map);
    });
