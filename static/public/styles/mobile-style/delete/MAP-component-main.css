@@ -1,0 +1,13 @@
+
+
+.mp-back {
+  position: relative; display: block; text-transform: uppercase; font-weight: 700; font-size: 0.8em; padding: 1em;
+  background: #F7F6ED; outline: none;color: #8E6B23; box-shadow: inset 0 1px rgba(0,0,0,0.1);
+  -webkit-transition: background 0.3s; -moz-transition: background 0.3s; transition: background 0.3s;
+}
+
+.mp-back::after {font-family: 'FontAwesome'; position: absolute; content:   "\f04b"; padding-top:3px; right: 15px; font-size: 0.6em; color: #8E6B23; /*rgba(0,0,0,0.3);*/ }
+
+
+
+
