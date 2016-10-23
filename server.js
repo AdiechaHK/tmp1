@@ -16,8 +16,13 @@ app.use(express.static(__dirname+'/static'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 //app.use('/', routes);
-app.use('/mobile',mobile);
+//app.use('/mobile',mobile);
 //app.use('/mapinfo',mapinfo);
 app.use('/snapmap',snapmap);
-
-app.listen(3000);
+app.get('/mobile', function(request, response){ 
+  return response.sendFile(__dirname+'/static/mobile.html');
+});
+app.get('/desktop', function(request, response){ 
+  return response.sendFile(__dirname+'/static/desktop.html');
+});
+app.listen(80);

@@ -493,6 +493,15 @@ var infowindow = new google.maps.InfoWindow({content: contentString,
    // Limit the zoom level
    google.maps.event.addListener(map, 'zoom_changed', zoom_changed);
 
+
+   /* flag to indicate google maps is loaded */
+    googleMapsLoaded = false;
+    /* listen to the tilesloaded event:if that is triggered, google maps is loaded successfully for sure */
+    google.maps.event.addListener(map, 'tilesloaded', function() {
+       googleMapsLoaded = true;$("#image2mapcanvas").css("display","none"); //remove temporary map image
+       google.maps.event.clearListeners(map, 'tilesloaded'); //clear the listener, we only need it once
+    });
+
     //google.maps.event.addListener(map, 'idle', placeChange);
 
     //google.maps.event.addListener(mapSatellite, 'zoom_changed', zoomChange_S);

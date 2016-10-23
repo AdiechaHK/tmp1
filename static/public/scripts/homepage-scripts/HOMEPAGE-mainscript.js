@@ -1,5 +1,6 @@
 /*'use strict';*/
 
+
 var isMobile = {
     Android: function() {return navigator.userAgent.match(/Android/i);},
     BlackBerry: function() {return navigator.userAgent.match(/BlackBerry/i);},
@@ -10,14 +11,39 @@ var isMobile = {
 };
 if( isMobile.any() ){ $('html, body').animate({scrollTop:70},500);}//scroll so that login  button is instantly visible on mobile
 function whichDevice_Mobile_Desktop(){
-    if( isMobile.any() ){window.location.href = "mobile.html";}
-    else{window.location.href = "desktop.html";}
+    function showForDevice(name) {
+        // window.location.href = name + ".html";
+        // ("#map-satellite").css("display","none");
+        
+        function processAjaxData(response, urlPath){
+            delete window.google;
+            document.write(response);
+            document.close();
+            window.history.pushState({"html":response.html,"pageTitle":name},"", urlPath);
+        }
+        $.get(name + '.html', function(data) {
+            console.log(data);
+            processAjaxData(data, window.location.toString());
+        });
+    }
+
+    if( isMobile.any() ){showForDevice('mobile');}
+    else{showForDevice('desktop');}
+}
+
+if( isMobile.any() ){
+    $("#map-satellite, #ytplayer").css("display","none");
+    $("#animateActivities-gif").css("display","block");
+    $("#styleMapVideo").css("width", "120px")
+} //hide #map-satellite in mobile device
+else{
+    $("#ytplayer").css("display","block"); 
+    $("#animateActivities-gif").css("display","none"); 
 }
 //if( isMobile.any() ) alert('Mobile');
 
 //if( isMobile.iOS() ) alert('iOS');
 //if( isMobile.Android() ) alert('android');
-
 
 var map = '';
 var mapSatellite = '';
@@ -29,6 +55,7 @@ else {var default_pos = new google.maps.LatLng(15.0, -30.0)}
 function getGeolocation() {
      $.getJSON('http://freegeoip.net/json/', function(location, textStatus, jqXHR) {
         currPosition = { lat: location.latitude, lng: location.longitude };
+	localStorage.setItem('currPosition', JSON.stringify(currPosition));
         map.setCenter(currPosition)
         mapSatellite.setCenter(currPosition);
         map.setZoom(12)
@@ -72,6 +99,33 @@ function initialize() {
     map.setZoom(1);
     mapSatellite.setZoom(1);
     getGeolocation();
+
+/* flag to indicate google maps is loaded */
+var googleMapsLoaded = false, norepeat=false;
+var script = document.createElement('script');
+/* listen to the tilesloaded event:if that is triggered, google maps is loaded successfully for sure */
+google.maps.event.addListener(map, 'tilesloaded', function() {
+   googleMapsLoaded = true;
+   if(!norepeat){//to avoid running codes already run in the setTimeout
+        script.src = 'public/scripts/homepage-scripts/HOMEPAGE-net_star.js';//loads after map_tiles are fully loaded increases loading speed
+        document.body.appendChild(script);
+        $("#stars-canvas").css("display","block");
+   }
+   $("#image2mapcanvas").css("display","none"); //remove temporary map image
+   google.maps.event.clearListeners(map, 'tilesloaded'); //clear the listener, we only need it once
+});
+(googleMapsLoaded)
+/* a delayed check to see if google maps was ever loaded */
+setTimeout(function() {
+  if (!googleMapsLoaded) {     
+    script.src = 'public/scripts/homepage-scripts/HOMEPAGE-net_star.js';//loads after map_tiles are fully loaded increases loading speed
+    document.body.appendChild(script);
+    norepeat=true;
+    $("#stars-canvas").css("display","block");     
+  }    
+}, 5000); //we have waited 5 secs, google maps is not loaded yet //alert('google maps is not loaded');
+
+
 }
 google.maps.event.addDomListener(window, 'load', initialize);
 
@@ -400,6 +454,8 @@ function toggleVideo(state) {
 
 
     func = state == 'hide' ? 'pauseVideo' : 'playVideo';
+    if(state == 'hide'){$("#styleMapVideo, stars-canvas").css("display","block"); $("#popupVid").css("display","none")}
+    else{$("#styleMapVideo, stars-canvas").css("display","none"); $("#popupVid").css("display","block")}
     iframe.postMessage('{"event":"command","func":"' + func + '","args":""}', '*');
 }
 
@@ -439,72 +495,5 @@ function toggleVideo(state) {
 
 
     //refresh page on browser resize to avoid animation overflow
-    $(window).bind('resize', function(e){
-      if (window.RT) clearTimeout(window.RT);
-          window.RT = setTimeout(function(){
-                this.location.reload(false); /* false to get page from cache */
-          }, 200);
-    });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*
     
-    function myFunction() {
 
-
-    $('#con').moderntube();
-        $('#con1').moderntube();
-        $('#con2').moderntube();
-        $('.carousel').carousel({
-            //interval: 2000
-        });
-
-        if (window.inner > 767) {
-            $('#slideSection').hide();
-                 $('.slide_div').hide();
-                     $('.container1').hide();
-                     
-                     //document.getElementById('#slideSection').style.visibility = 'hidden';
-        }
-
-        $('#copyright').mouseenter(function () {
-            //if (window.innerWidth > 767) {
-              
-                     $('.container1').slideDown();
-            
-            //}
-        });
-
-        $('#copyright').mouseleave(function (event) {
-            if (window.innerWidth > 767) {
-                var currentelement = event.target;
-                if ($(currentelement).parents("#slideSection")) {//alert("anhc");
-                }
-                else {
-                    $('#slideSection').slideUp();
-                }
-            }
-        });
-
-        $('#slideSection').hover(null, function () {
-            if (window.innerWidth > 767) {
-                $('#slideSection').slideUp();
-            }
-        });
-        
-    }*/

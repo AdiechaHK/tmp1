@@ -64,11 +64,11 @@ body,
 
 
 /*====================== main FOOTER buttons starts here========================*/
-    /* Circular Toolmyspace-outere (SO) * http://stackoverflow.com/q/13132864/1397351
+    /* Circular Toolmyspace-outer (SO) * http://stackoverflow.com/q/13132864/1397351
       generic styles for btn-myspace & circular menu */
     .footer-myspace {
       position: absolute;
-      bottom: calc(0% - 25px); left: 45%;
+      bottom: calc(0% - 30px); left: 41%;
       font: 1.5em/1.13 Verdana, sans-serif;
       transition: .5s;
     }
@@ -93,7 +93,7 @@ body,
       padding-top:10px;
     }
     /* circular menu */
-    .myspace-outere {
+    .myspace-outer {
       z-index: 100;
       /**outline: dotted 1px white;/**/
       margin: -6em -5em;
@@ -103,7 +103,7 @@ body,
       opacity: 0;
     }
     /* the ends of the menu */
-    .myspace-outere:before, .myspace-outere:after {
+    .myspace-outer:before, .myspace-outer:after {
       position: absolute;
       top: 34.3%;
       width: .5em; height: 14%;
@@ -111,14 +111,14 @@ body,
       background: white;
       content: '';
     }
-    .myspace-outere:before {
+    .myspace-outer:before {
       left: 5.4%;
       border-radius: .25em 0 0 .25em;
       box-shadow: -1px 0 1px dimgrey, inset 1px 0 1px white, inset -1px 0 1px grey, 
             inset 0 1px 1px white, inset 0 -1px 1px white;
       transform: rotate(-75deg);
     }
-    .myspace-outere:after {
+    .myspace-outer:after {
       right: 5.4%;
       border-radius: 0 .25em .25em 0;
       box-shadow: 1px 0 1px dimgrey, inset -1px 0 1px white, inset 1px 0 1px grey,
@@ -126,7 +126,7 @@ body,
       transform: rotate(75deg);
     }
     /* make the menu appear on click */
-    .btn-myspace:focus + .myspace-outere {
+    .btn-myspace:focus + .myspace-outer {
       transform: scale(1);
       opacity: 1;
     }
@@ -233,7 +233,7 @@ body,
 
 
     .form_title, .form_description, .form_date_1, .form_date_2, .form_time_1, .form_time_2, .form_street, .form_place, .descriptags, .tags_description{font-size: 10px; width: 92%; height: 50px; margin: 0 0 5px 0; padding: 2.5px 5px;border: 0px; background:#D3D3D3 !important}
-    .form_title, .form_description, .form_street, .form_place, .descriptags, .tags_description{width: 95%;}
+    .form_title, .form_description, .form_street, .form_place, .descriptags, .tags_description{width: 90%;}
     .form_date_1, .form_date_2, .form_time_1, .form_time_2{width: calc(45% - 2.5px);}
     .form_description, .form_date_2, .form_time_2, .form_place, .tags_description{ display: none; }
     .form_description_add, .form_date_add, .form_time_add, .form_place_add, .tags_description_add{width: 14px!important; cursor: pointer; }

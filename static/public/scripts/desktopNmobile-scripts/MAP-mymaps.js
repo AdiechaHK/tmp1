@@ -3,7 +3,7 @@ var mapInfo = []
 
 var map = '';
 var mapSatellite = '';
-var currPosition = '';
+var currPosition = typeof localStorage.getItem('currPosition') == "undefined"? '': eval("("+localStorage.getItem('currPosition')+")");
 var infwindow = '';
 var marker;
 var circles;

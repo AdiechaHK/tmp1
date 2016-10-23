@@ -14,7 +14,9 @@ var direction=[1];//1= foward, 0=backwards
 var maxSize = 50;
 var for_k;
 var imageObj= new Image();// Create new img element
-var imageJson; 
+var imageJson;
+var canvasWidth= document.body.clientWidth;
+ 		var canvasHeight=Math.max(100, 2*canvasWidth *270/1300); //document.body.clientHeight wont work   because the height and width are scalled differently + use of min()
 
 /*!
  * Mantis.js / jQuery / Zepto.js plugin for Constellation
@@ -35,18 +37,18 @@ var imageJson;
  		var canvasHeight=Math.max(100, 2*canvasWidth *270/1300); //document.body.clientHeight wont work   because the height and width are scalled differently + use of min()
 		$("#myCanvas").css("height", 230);
         $("#myCanvas").css("width", canvasWidth);
+
 	 */
+
 	function Constellation (canvas, options) {
-		var canvasWidth= document.body.clientWidth;
- 		var canvasHeight=Math.max(100, 2*canvasWidth *270/1300); //document.body.clientHeight wont work   because the height and width are scalled differently + use of min()
 		
-		$(canvas).css("height", 280);
-        $(canvas).css("width", canvasWidth);
-		var $canvas = $(canvas),
+		//$("#stars-canvas").css("height", 280);
+        //$("#stars-canvas").css("width", canvasWidth);
+		var $canvas = $("#stars-canvas"),
 			context = canvas.getContext('2d'),
 			defaults = {
 				star: {
-					color: 'white', //'rgba(255, 255, 255, .5)',
+					color: '#F7F3ED', //'rgba(255, 255, 255, .5)',
 					width: 1
 				},
 				line: {
@@ -60,55 +62,58 @@ var imageJson;
 				width: document.body.clientWidth, //window.innerWidth,
 				height: document.body.clientHeight, //window.innerHeight,
 				length: Math.round(0.0078*document.body.clientWidth + 2.5) ,//number of stars
-				distance: 120,
-				radius: 150,
+				distance: 220,
+				radius: 250,
 				stars: []
 			},
 			config = $.extend(true, {}, defaults, options);//document.body.clientWidth
+
  
- 	function  preloadImages(){
-     	imageJson ={items: [
-            {index:0, url:"public/Images/activityIcons/watchTv.png"},
-            {index:1, url:"public/Images/activityIcons/beer.png"}, 
-            {index:2, url:"public/Images/activityIcons/grill.png"}, 
-            {index:3, url:"public/Images/activityIcons/sports.png"}, 
-            {index:4, url:"public/Images/activityIcons/wedding.png"}, 
-            {index:5, url:"public/Images/activityIcons/mothers.png"}, 
-            {index:6, url:"public/Images/activityIcons/grill.png"},
-            {index:7, url:"public/Images/activityIcons/beer.png"}, 
-            {index:8, url:"public/Images/activityIcons/watchTv.png"}, 
-            {index:9, url:"public/Images/activityIcons/wedding.png"}, 
-            {index:10, url:"public/Images/activityIcons/sports.png"},
-            {index:11, url:"public/Images/activityIcons/beer.png"}, 
-            {index:12, url:"public/Images/activityIcons/grill.png"}, 
-            {index:13, url:"public/Images/activityIcons/sports.png"}, 
-            {index:14, url:"public/Images/activityIcons/wedding.png"}, 
-            {index:15, url:"public/Images/activityIcons/mothers.png"}, 
-            {index:16, url:"public/Images/activityIcons/grill.png"},
-            {index:17, url:"public/Images/activityIcons/beer.png"}, 
-            {index:18, url:"public/Images/activityIcons/watchTv.png"}, 
-            {index:19, url:"public/Images/activityIcons/wedding.png"}, 
-            {index:20, url:"public/Images/activityIcons/sports.png"}
-            ]};
-	} 
+	 	function  preloadImages(){
+	     	imageJson ={items:[            
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/beer.png"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/friends.PNG"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/grill.PNG"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/mothers.PNG"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/sports.PNG"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/watchTv.PNG"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/wedding.png"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/beer.png"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/friends.PNG"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/grill.PNG"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/mothers.PNG"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/sports.PNG"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/watchTv.PNG"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/wedding.png"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/beer.png"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/friends.PNG"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/grill.PNG"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/mothers.PNG"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/sports.PNG"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/watchTv.PNG"},
+	            {index:2, url:"http://maparise.com/public/images/activityIcons/wedding.png"}
+	            ]};
+	            return imageJson
+		} 
 
 
-    function getRandomCoordinates() {
-        
-        var w = canvas.width;
-        var h = canvas.height;        
-        var x = Math.floor(Math.random() * (w - (0.7*maxSize)) +0.7*maxSize);//Math.floor(Math.random() * (w - (maxSize / 2)));
-        var y = Math.floor(Math.random() * (h - (0.7*maxSize)) +0.7*maxSize);        
-        return [x, y];
-    }
+	    function getRandomCoordinates() {
+	        
+	        var w = canvas.width;
+	        var h = canvas.height;        
+	        var x = Math.floor(Math.random() * (w - (0.7*maxSize)) +0.7*maxSize);//Math.floor(Math.random() * (w - (maxSize / 2)));
+	        var y = Math.floor(Math.random() * (h - (0.7*maxSize)) +0.7*maxSize);        
+	        return [x, y];
+	    }
 
 		function Star() {
 			this.x = Math.random() * canvas.width;
 			this.y = Math.random() * canvas.height;
 			//this.radius = Math.random() * config.star.width;
 			var r = Math.floor(Math.random() * (maxSize-1)); //20*Math.random()*Math.random();//Math.floor(maxSize * Math.random());   
-            this.radius=r*r/maxSize;//for wide range of stating sizes
+	        this.radius=r*r/maxSize;//for wide range of stating sizes
 		}
+		
 
 		Star.prototype = {
 			create: function(){
@@ -117,7 +122,9 @@ var imageJson;
 				context.fill();
 				resize=this.radius/(2*maxSize);
 
+	        	/*this code runs once*/
 	        	imageObj[for_k].src = imageJson.items[for_k].url;// Set source path
+	        	
 	        	var rw =imageObj[for_k].width*resize, rh=imageObj[for_k].height*resize, xx=this.x-rw/2, yy=this.y-rh/2; //xx and yy corrected for left cenering
 				context.drawImage(imageObj[for_k],xx,yy, rw, rh);
 			},
@@ -187,14 +194,26 @@ var imageJson;
 		};
 
 		this.setCanvas = function () {
+			var canvas_H=$("#map-canvas").css("height").slice(0,-2);
+			//yss=$("#map-canvas").css("width")
+			//alert(ys+"ggg"+yss)
+			//alert(config.width+ "jjj"+config.height)
 			canvas.width = config.width;
-			canvas.height = config.height;
+			canvas.height =  canvas_H;//config.height;ys.slice(0,-2)+20;
+			$(window).resize(function(){
+			    canvas.width = document.body.clientWidth;
+			});
 		};
 
 		this.setContext = function () {
-			context.fillStyle = config.star.color;
-			context.strokeStyle = config.line.color;
-			context.lineWidth = config.line.width;
+			canvasColors()
+			$(window).resize(function(){canvasColors()});
+			
+			function canvasColors(){
+				context.fillStyle = config.star.color;
+				context.strokeStyle = config.line.color;
+				context.lineWidth = config.line.width;				
+			}
 		};
 
 		this.setInitialParameters = function () {
@@ -206,10 +225,13 @@ var imageJson;
 			}
 
 			var length = config.length;
-			preloadImages();
+			imageJson=preloadImages();
+			
 	        for (i = 0; i < length; i++){direction[i]=1; 
+	        	//alert("ddd"+dataN.items[i].url)
 	        	direction[i]=1;//grow circles
 	        	imageObj[i]= new Image();// Create new img element 1 for each circles/images
+	        	//imageObj[i].src = dataN.items[i].url;
 	        } 
 		};
 

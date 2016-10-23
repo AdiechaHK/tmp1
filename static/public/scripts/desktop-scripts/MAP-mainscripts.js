@@ -332,66 +332,17 @@ $('#btn_gotoSearch').click(function(){
 
 
 //use of custom toggle buttons famultibutton for  post event form begins here
-        $(function($) { 
-            btn=$('#btn11').famultibutton({
-                icon: 'fa-step-backward',
-                classes: ['fa-3x'],
-                mode: 'push', 
-            });
-
-            $('#btn_upload').famultibutton({
-                backgroundIcon: 'fa-circle-thin',
-                icon: 'fa-camera',
-                onColor: '#568203',
-                offColor: '#505050',
-                onBackgroundColor: '#568203',
-                classes: ['fa-lg'] 
-            });                           
-            $('#btn_title').famultibutton({
-                backgroundIcon: 'fa-circle-thin',
-                icon: 'fa-pencil-square-o',
-                onColor: '#568203',
-                offColor: '#505050',
-                onBackgroundColor: '#568203',
-                classes: ['fa-lg'] 
-            });
-
-            $('#btn_date').famultibutton({
-                backgroundIcon: 'fa-circle-thin',
-                icon: 'fa-calendar',
-                onColor: '#568203',
-                offColor: '#505050',
-                onBackgroundColor: '#568203',
-                classes: ['fa-lg']
-            });
-
-            $('#btn_time').famultibutton({
-                backgroundIcon: 'fa-circle-thin',
-                icon: 'fa-clock-o',
-                onColor: '#568203',
-                offColor: '#505050',
-                onBackgroundColor: '#568203',
-                classes: ['fa-lg'] 
-            });
-
-            $('#btn_place').famultibutton({
-                backgroundIcon: 'fa-circle-thin',
-                icon: 'fa-map-marker',
-                onColor: '#568203',
-                offColor: '#505050',
-                onBackgroundColor: '#568203',
-                classes: ['fa-lg'] 
-            });
-
-            $('#btn_tags').famultibutton({
-                backgroundIcon: 'fa-circle-thin',
-                icon: 'fa-hashtag',
-                onColor: '#568203',
-                offColor: '#505050',
-                onBackgroundColor: '#568203',
-                classes: ['fa-lg']
-            });
-        });
+    function FXN_postWith_MoreDetails(givenID, icon){
+        $('#'+givenID).famultibutton({
+            backgroundIcon: 'fa-circle-thin',
+            icon: icon,
+            onColor: '#568203',
+            offColor: '#505050',
+            onBackgroundColor: '#568203',
+            classes: ['fa-x2'] 
+        }); 
+    }
+    $(function(){$('div[onload], span[onload]').trigger('onload');});// part of function FXN_postWith_MoreDetails(givenID, icon)
 //use of custom toggle buttons famultibutton for  post event form ends here
 
 

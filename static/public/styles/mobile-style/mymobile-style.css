@@ -80,9 +80,9 @@ html, body, div, span, applet, object, iframe,
 
 .path-nav li {position: absolute; display: block; top: 0; left: 0;
   -moz-transition-property: all; -webkit-transition-property: all; -o-transition-property: all; transition-property: all;
-  -moz-transition-duration: 2.4s; -webkit-transition-duration: 2.4s; -o-transition-duration: 2.4s; transition-duration: 2.4s;
-  -moz-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 2.275); -webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 2.275);
-  -o-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 2.275); transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 2.275);
+  -moz-transition-duration: 1.0s; -webkit-transition-duration: 1.0s; -o-transition-duration: 1.0s; transition-duration: 1.0s;
+  -moz-transition-timing-function: cubic-bezier(0.25,0.1,0.25,1); -webkit-transition-timing-function: cubic-bezier(0.25,0.1,0.25,1);
+  -o-transition-timing-function: cubic-bezier(0.25,0.1,0.25,1); transition-timing-function: cubic-bezier(0.25,0.1,0.25,1);/*cubic-bezier(0.175, 0.885, 0.320, 2.275);*/
   -moz-transition-delay: 0.175s; -webkit-transition-delay: 0.175s; -o-transition-delay: 0.175s; transition-delay: 0.175s;
 }
 
